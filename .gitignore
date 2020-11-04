@@ -1,0 +1,10 @@
+/vendor
+composer.lock
+composer.phar
+phpunit.xml
+.directory
+/dirlist.*
+/documents/
+/.idea/
+src/.DS_Store
+.DS_Store
