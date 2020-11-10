@@ -20,10 +20,10 @@ class GatewayTest extends GatewayTestCase
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('isbank');
+        $this->gateway->setBank('teb');
         $this->gateway->setUserName('api');
-        $this->gateway->setClientId('700658785');
-        $this->gateway->setStoreKey('123456');
+        $this->gateway->setClientId('400000200');
+        $this->gateway->setStoreKey('TRPS0200');
         $this->gateway->setPassword('TEST1111');
         $this->gateway->setTestMode(true);
     }
@@ -80,9 +80,9 @@ class GatewayTest extends GatewayTestCase
             'amount' => '12.00',
             'installment' => 1,
             'currency' => 'TRY',
-            'returnUrl' => 'payment.company.com',
-            'cancelUrl' => 'payment.company.com',
-            'notifyUrl' => 'payment.company.com',
+            'returnUrl' => 'http://test.domain.com/basarili',
+            'cancelUrl' => 'http://test.domain.com/basarisiz',
+            'notifyUrl' => 'http://test.domain.com/basarili',
             'lang' => 'tr'
         ];
 
@@ -95,9 +95,9 @@ class GatewayTest extends GatewayTestCase
     private function getCardInfo(): array
     {
         return [
-            'number' => '5406675406675403',
+            'number' => '4355084355084358',
             'expiryMonth' => '12',
-            'expiryYear' => '2022',
+            'expiryYear' => '2030',
             'cvv' => '000',
             'email' => 'test@gmail.com',
             'firstname' => 'Test',

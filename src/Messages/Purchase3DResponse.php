@@ -58,6 +58,7 @@ class Purchase3DResponse extends AbstractResponse
         $form->setAttribute('action', $formData['redirectUrl']);
 
         $clientId = $dom->createElement('input');
+        $cardType = $dom->createElement('input');
         $storeType = $dom->createElement('input');
         $hash = $dom->createElement('input');
         $islemTipi = $dom->createElement('input');
@@ -76,6 +77,10 @@ class Purchase3DResponse extends AbstractResponse
         $clientId->setAttribute('name', 'clientid');
         $clientId->setAttribute('type', 'hidden');
         $clientId->setAttribute('value', $formData['clientid']);
+
+        $cardType->setAttribute('name', 'cardType');
+        $cardType->setAttribute('type', 'hidden');
+        $cardType->setAttribute('value', $formData['cardType']);
 
         $storeType->setAttribute('name', 'storetype');
         $storeType->setAttribute('type', 'hidden');
@@ -135,6 +140,7 @@ class Purchase3DResponse extends AbstractResponse
         $ecomPaymentCardExpDateMonth->setAttribute('value', $formData['Ecom_Payment_Card_ExpDate_Month']);
 
         $form->appendChild($clientId);
+        $form->appendChild($cardType);
         $form->appendChild($storeType);
         $form->appendChild($hash);
         $form->appendChild($islemTipi);
@@ -149,6 +155,12 @@ class Purchase3DResponse extends AbstractResponse
         $form->appendChild($pan);
         $form->appendChild($ecomPaymentCardExpDateYear);
         $form->appendChild($ecomPaymentCardExpDateMonth);
+
+
+        $button = $dom->createElement('input');
+        $button->setAttribute('type', 'submit');
+        $button->setAttribute('value', 'Send Me');
+        $form->appendChild($button);
 
         $body->appendChild($form);
         $html->appendChild($body);

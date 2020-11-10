@@ -56,11 +56,10 @@ class Purchase3DRequest extends AbstractRequest
             $data['okUrl'].
             $data['failUrl'].
             $data['islemtipi'].
-            $data['taksit'].
             $this->getRnd().
             $this->getStoreKey();
 
-        $data['hash'] = base64_encode(sha1($signature));
+        $data['hash'] = base64_encode(sha1($signature, true));
         $data['redirectUrl'] = $redirectUrl;
         return $data;
     }
@@ -82,7 +81,7 @@ class Purchase3DRequest extends AbstractRequest
 
     public function getRnd()
     {
-        return microtime();
+        return str_replace(' ', '', (string)microtime());
     }
 
     public function getMoneyPoints()
