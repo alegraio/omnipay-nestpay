@@ -15,7 +15,7 @@ class GatewayTest extends GatewayTestCase
     /** @var array */
     public $options;
 
-    public function setUp()
+    public function setUp(): void
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
@@ -26,7 +26,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setTestMode(true);
     }
 
-    public function testPurchase()
+    public function testPurchase(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
@@ -37,10 +37,10 @@ class GatewayTest extends GatewayTestCase
 
         /** @var PurchaseResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
     }
 
-    public function testAuthorize()
+    public function testAuthorize(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
@@ -51,10 +51,10 @@ class GatewayTest extends GatewayTestCase
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($this->options)->send();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
     }
 
-    public function testCapture()
+    public function testCapture(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
@@ -65,7 +65,7 @@ class GatewayTest extends GatewayTestCase
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($this->options)->send();
-        $this->assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());
     }
 
     private function getCardInfo(): array
