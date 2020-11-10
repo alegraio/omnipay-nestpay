@@ -10,45 +10,14 @@ use Omnipay\Common\Message\ResponseInterface;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    use RequestTrait;
+
     private $root;
 
     /** @var \DOMDocument */
     private $document;
 
-    /** @var array */
-    protected $endpoints = [
-        'test' => 'https://testvpos.asseco-see.com.tr/fim/api',
-        'asseco' => 'https://entegrasyon.asseco-see.com.tr/fim/api',
-        'isbank' => 'https://spos.isbank.com.tr',
-        'akbank' => 'https://www.sanalakpos.com',
-        'finansbank' => 'https://www.fbwebpos.com',
-        'denizbank' => 'https://denizbank.est.com.tr',
-        'kuveytturk' => 'https://kuveytturk.est.com.tr',
-        'halkbank' => 'https://sanalpos.halkbank.com.tr',
-        'anadolubank' => 'https://anadolusanalpos.est.com.tr',
-        'hsbc' => 'https://vpos.advantage.com.tr',
-        'ziraatbank' => 'https://sanalpos2.ziraatbank.com.tr'
-    ];
-
-    protected $url = [
-        "3d" => "/servlet/est3Dgate",
-        "3dhsbc" => "/servlet/hsbc3Dgate",
-        "list" => "/servlet/listapproved",
-        "detail" => "/servlet/cc5ApiServer",
-        "cancel" => "/servlet/cc5ApiServer",
-        "return" => "/servlet/cc5ApiServer",
-        "purchase" => "/servlet/cc5ApiServer"
-    ];
-
-    /**
-     * @return string
-     */
-    public function getEndpoint(): string
-    {
-        $gateway = $this->getBank();
-
-        return $this->getTestMode() == true ? $this->endpoints["test"] : $this->endpoints[$gateway] . $this->url["purchase"];
-    }
+    private $action = "purchase";
 
     /**
      * @return string
@@ -65,6 +34,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setClientId(string $value): AbstractRequest
     {
         return $this->setParameter('clientId', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param string $value
+     * @return void
+     */
+    public function setAction(string $value): void
+    {
+        $this->action = $value;
     }
 
     /**

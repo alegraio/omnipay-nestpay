@@ -5,6 +5,7 @@
 
 namespace Omnipay\NestPay;
 
+use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
@@ -105,6 +106,23 @@ class Gateway extends AbstractGateway
     }
 
     /**
+ * @param string $storekey
+ * @return Gateway
+ */
+    public function setStoreKey(string $storekey): Gateway
+    {
+        return $this->setParameter('storekey', $storekey);
+    }
+
+    /**
+     * @return Gateway
+     */
+    public function getStoreKey(): string
+    {
+        return $this->getParameter('storekey');
+    }
+
+    /**
      * @param array $parameters
      * @return AbstractRequest|RequestInterface
      */
@@ -129,5 +147,14 @@ class Gateway extends AbstractGateway
     public function purchase(array $parameters = []): RequestInterface
     {
         return $this->createRequest(PurchaseRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function purchase3D(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(Purchase3DRequest::class, $parameters);
     }
 }

@@ -4,6 +4,7 @@ namespace Omnipay\Tests;
 
 use Omnipay\NestPay\Messages\AuthorizeResponse;
 use Omnipay\NestPay\Gateway;
+use Omnipay\NestPay\Messages\Purchase3DResponse;
 use Omnipay\NestPay\Messages\PurchaseResponse;
 
 
@@ -22,6 +23,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setBank('isbank');
         $this->gateway->setUserName('api');
         $this->gateway->setClientId('700658785');
+        $this->gateway->setStoreKey('123456');
         $this->gateway->setPassword('TEST1111');
         $this->gateway->setTestMode(true);
     }
@@ -30,7 +32,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '678766765',
+            'transactionId' => '123456789',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -64,8 +66,30 @@ class GatewayTest extends GatewayTestCase
         ];
 
         /** @var AuthorizeResponse $response */
-        $response = $this->gateway->authorize($this->options)->send();
+        $response = $this->gateway->capture($this->options)->send();
         self::assertTrue($response->isSuccessful());
+    }
+
+    public function testPurchase3D(): void
+    {
+        $this->options = [
+            'card' => $this->getCardInfo(),
+            'storetype' => '3d_pay',
+            'companyName' => 'Test Firması',
+            'transactionId' => '987654321',
+            'amount' => '12.00',
+            'installment' => 1,
+            'currency' => 'TRY',
+            'returnUrl' => 'payment.company.com',
+            'cancelUrl' => 'payment.company.com',
+            'notifyUrl' => 'payment.company.com',
+            'lang' => 'tr'
+        ];
+
+        /** @var Purchase3DResponse $response */
+        $response = $this->gateway->purchase3D($this->options)->send();
+        self::assertTrue($response->isSuccessful());
+        var_dump($response->getRedirectData());
     }
 
     private function getCardInfo(): array

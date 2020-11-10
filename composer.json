@@ -12,7 +12,8 @@
   "require": {
     "php": "^7.3",
     "omnipay/common": "^3",
-    "ext-dom": "*"
+    "ext-dom": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "omnipay/tests": "^3",
