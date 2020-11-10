@@ -1,0 +1,22 @@
+{
+  "name": "alegra/omnipay-nestpay",
+  "type": "library",
+  "description": "NestPay (EST) (İş Bankası, Akbank, Finansbank, Denizbank, Kuveytturk, Halkbank, Anadolubank, ING Bank, Citibank, Cardplus, Ziraat Bankası sanal pos) payments driver for the Omnipay payment processing library",
+  "homepage": "https://github.com/alegraio/omnipay-nestpay",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Omnipay\\NestPay\\": "src/"
+    }
+  },
+  "require": {
+    "php": "^7.3",
+    "omnipay/common": "^3",
+    "ext-dom": "*"
+  },
+  "require-dev": {
+    "omnipay/tests": "^3",
+    "squizlabs/php_codesniffer": "^3"
+  },
+  "prefer-stable": true
+}
