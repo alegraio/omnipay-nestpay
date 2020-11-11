@@ -147,6 +147,9 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = []): RequestInterface
     {
+        if (isset($parameters['is3d']) && $parameters['is3d']) {
+            return $this->purchase3D($parameters);
+        }
         return $this->createRequest(PurchaseRequest::class, $parameters);
     }
 

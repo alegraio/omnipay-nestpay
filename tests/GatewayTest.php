@@ -76,6 +76,7 @@ class GatewayTest extends GatewayTestCase
 
         $this->options = [
             'card' => $this->getCardInfo(),
+            'is3d' => true,
             'storetype' => '3d_pay',
             'companyName' => 'Test Firması',
             'transactionId' => '2-987654321',
@@ -89,7 +90,7 @@ class GatewayTest extends GatewayTestCase
         ];
 
         /** @var Purchase3DResponse $response */
-        $response = $this->gateway->purchase3D($this->options)->send();
+        $response = $this->gateway->purchase($this->options)->send();
         self::assertTrue($response->isSuccessful());
         var_dump($response->getRedirectData());
     }
