@@ -20,10 +20,9 @@ class GatewayTest extends GatewayTestCase
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('teb');
+        $this->gateway->setBank('isbank');
         $this->gateway->setUserName('api');
-        $this->gateway->setClientId('400000200');
-        $this->gateway->setStoreKey('TRPS0200');
+        $this->gateway->setClientId('700658785');
         $this->gateway->setPassword('TEST1111');
         $this->gateway->setTestMode(true);
     }
@@ -32,7 +31,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '123456789',
+            'transactionId' => '987654321',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -72,11 +71,14 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase3D(): void
     {
+        $this->gateway->setClientId('400000200');
+        $this->gateway->setStoreKey('TRPS0200');
+
         $this->options = [
             'card' => $this->getCardInfo(),
             'storetype' => '3d_pay',
             'companyName' => 'Test Firması',
-            'transactionId' => '987654321',
+            'transactionId' => '2-987654321',
             'amount' => '12.00',
             'installment' => 1,
             'currency' => 'TRY',
@@ -95,9 +97,9 @@ class GatewayTest extends GatewayTestCase
     private function getCardInfo(): array
     {
         return [
-            'number' => '4355084355084358',
+            'number' => '5406675406675403',
             'expiryMonth' => '12',
-            'expiryYear' => '2030',
+            'expiryYear' => '2022',
             'cvv' => '000',
             'email' => 'test@gmail.com',
             'firstname' => 'Test',

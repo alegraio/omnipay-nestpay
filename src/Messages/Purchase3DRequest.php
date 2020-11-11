@@ -81,7 +81,7 @@ class Purchase3DRequest extends AbstractRequest
 
     public function getRnd()
     {
-        return str_replace(' ', '', (string)microtime());
+        return (string)time();
     }
 
     public function getMoneyPoints()
