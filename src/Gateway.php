@@ -15,6 +15,7 @@ use Omnipay\Common\Message\RequestInterface;
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\CaptureRequest;
 use Omnipay\NestPay\Messages\RefundRequest;
+use Omnipay\NestPay\Messages\StatusRequest;
 use Omnipay\NestPay\Messages\VoidRequest;
 
 /**
@@ -188,5 +189,14 @@ class Gateway extends AbstractGateway
     public function void(array $parameters = []): RequestInterface
     {
         return $this->createRequest(VoidRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function status(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(StatusRequest::class, $parameters);
     }
 }

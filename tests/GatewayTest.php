@@ -32,7 +32,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '5-987654321',
+            'transactionId' => '6-987654321',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -129,7 +129,7 @@ class GatewayTest extends GatewayTestCase
         $this->options = [
             'transactionId' => '5-987654321',
             'amount'        => 12.00,
-            'currency'      => 'TRY',
+            // 'currency'      => 'TRY',
             'card'          => $this->getCardInfo()
         ];
         $response = $this->gateway->refund($this->options)->send();
@@ -141,9 +141,7 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(): void
     {
         $this->options = [
-            'transactionId' => '5-987654321',
-            'amount'        => 12.00,
-            'currency'      => 'TRY',
+            'transactionId' => '6-987654321',
             'card'          => $this->getCardInfo()
         ];
         $response = $this->gateway->void($this->options)->send();
@@ -160,7 +158,7 @@ class GatewayTest extends GatewayTestCase
             'currency'      => 'TRY',
             'card'          => $this->getCardInfo()
         ];
-        $response = $this->gateway->void($this->options)->send();
+        $response = $this->gateway->status($this->options)->send();
         var_dump($response->getData());
         self::assertTrue($response->isSuccessful());
 

@@ -4,7 +4,7 @@
 namespace Omnipay\NestPay\Messages;
 
 
-class VoidRequest extends AbstractRequest
+class StatusRequest extends AbstractRequest
 {
 
     /**
@@ -12,11 +12,11 @@ class VoidRequest extends AbstractRequest
      */
     public function getData()
     {
-        $data['Type'] = 'Void';
         $data['OrderId'] = $this->getTransactionId();
         $data['Name'] = $this->getUserName();
         $data['Password'] = $this->getPassword();
         $data['ClientId'] = $this->getClientId();
+        $this->setStatus(true);
         // $data['Currency'] = $this->getCurrencyNumeric();
         // $data['Total'] = $this->getAmount();
 
@@ -25,10 +25,10 @@ class VoidRequest extends AbstractRequest
 
     /**
      * @param $data
-     * @return VoidResponse
+     * @return StatusResponse
      */
-    protected function createResponse($data): VoidResponse
+    protected function createResponse($data): StatusResponse
     {
-        return new VoidResponse($this, $data);
+        return new StatusResponse($this, $data);
     }
 }

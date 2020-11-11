@@ -18,8 +18,10 @@ class RefundRequest extends AbstractRequest
         $this->validate('amount');
 
         $data['Type'] = 'Credit';
+        $data['Name'] = $this->getUserName();
+        $data['Password'] = $this->getPassword();
+        $data['ClientId'] = $this->getClientId();
         $data['OrderId'] = $this->getTransactionId();
-        $data['Currency'] = $this->getCurrencyNumeric();
         $data['Total'] = $this->getAmount();
 
         return $data;

@@ -39,7 +39,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * @return string
      */
-    public function getAction(): string
+    public function getAction(): ?string
     {
         return $this->action;
     }
@@ -166,7 +166,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     /**
      * @return string
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->getParameter('status');
     }
