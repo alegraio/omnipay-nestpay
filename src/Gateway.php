@@ -14,6 +14,8 @@ use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\CaptureRequest;
+use Omnipay\NestPay\Messages\RefundRequest;
+use Omnipay\NestPay\Messages\VoidRequest;
 
 /**
  * @method NotificationInterface acceptNotification(array $options = array())
@@ -22,8 +24,6 @@ use Omnipay\NestPay\Messages\CaptureRequest;
  * @method RequestInterface createCard(array $options = array())
  * @method RequestInterface updateCard(array $options = array())
  * @method RequestInterface deleteCard(array $options = array())
- * @method RequestInterface refund(array $options = array())
- * @method RequestInterface void(array $options = array())
  */
 class Gateway extends AbstractGateway
 {
@@ -169,5 +169,24 @@ class Gateway extends AbstractGateway
     public function completePurchase(array $parameters = []): RequestInterface
     {
         return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function refund(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(RefundRequest::class, $parameters);
+    }
+
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function void(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(VoidRequest::class, $parameters);
     }
 }

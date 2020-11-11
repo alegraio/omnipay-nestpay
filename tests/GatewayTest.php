@@ -32,7 +32,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '987654321',
+            'transactionId' => '5-987654321',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -40,6 +40,7 @@ class GatewayTest extends GatewayTestCase
         /** @var PurchaseResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
         self::assertTrue($response->isSuccessful());
+        var_dump($response->getData());
     }
 
     public function testAuthorize(): void
@@ -120,6 +121,48 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->completePurchase($this->options)->send();
         self::assertTrue($response->isSuccessful());
 
+
+    }
+
+    public function testRefund(): void
+    {
+        $this->options = [
+            'transactionId' => '5-987654321',
+            'amount'        => 12.00,
+            'currency'      => 'TRY',
+            'card'          => $this->getCardInfo()
+        ];
+        $response = $this->gateway->refund($this->options)->send();
+        var_dump($response->getData());
+        self::assertTrue($response->isSuccessful());
+
+    }
+
+    public function testVoid(): void
+    {
+        $this->options = [
+            'transactionId' => '5-987654321',
+            'amount'        => 12.00,
+            'currency'      => 'TRY',
+            'card'          => $this->getCardInfo()
+        ];
+        $response = $this->gateway->void($this->options)->send();
+        var_dump($response->getData());
+        self::assertTrue($response->isSuccessful());
+
+    }
+
+    public function testStatus(): void
+    {
+        $this->options = [
+            'transactionId' => '5-987654321',
+            'amount'        => 12.00,
+            'currency'      => 'TRY',
+            'card'          => $this->getCardInfo()
+        ];
+        $response = $this->gateway->void($this->options)->send();
+        var_dump($response->getData());
+        self::assertTrue($response->isSuccessful());
 
     }
 

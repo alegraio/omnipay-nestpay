@@ -106,6 +106,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $this->root->appendChild($this->document->createElement($id, $value));
             }
 
+            $extra = $this->document->createElement('Extra');
+
+            if (!empty($this->getStatus())) {
+                $extra->appendChild($this->document->createElement('ORDERSTATUS', 'QUERY'));
+                $this->root->appendChild($extra);
+            }
+
             $this->document->appendChild($this->root);
             $this->addShipAndBillToXml($shipInfo, $billInfo);
             $httpRequest = $this->httpClient->request($this->getHttpMethod(), $this->getEndpoint(),
@@ -154,6 +161,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setBank(string $value): AbstractRequest
     {
         return $this->setParameter('bank', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->getParameter('status');
+    }
+
+    /**
+     * @param string $value
+     * @return AbstractRequest
+     */
+    public function setStatus(string $value): AbstractRequest
+    {
+        return $this->setParameter('status', $value);
     }
 
     /**
