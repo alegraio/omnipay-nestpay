@@ -5,6 +5,8 @@
 
 namespace Omnipay\NestPay;
 
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\NestPay\Messages\CompletePurchaseRequest;
 use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
@@ -14,15 +16,14 @@ use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\CaptureRequest;
 
 /**
- * @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
- * @method \Omnipay\Common\Message\RequestInterface createCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
+ * @method NotificationInterface acceptNotification(array $options = array())
+ * @method RequestInterface completeAuthorize(array $options = array())
+ * @method RequestInterface fetchTransaction(array $options = [])
+ * @method RequestInterface createCard(array $options = array())
+ * @method RequestInterface updateCard(array $options = array())
+ * @method RequestInterface deleteCard(array $options = array())
+ * @method RequestInterface refund(array $options = array())
+ * @method RequestInterface void(array $options = array())
  */
 class Gateway extends AbstractGateway
 {
@@ -106,9 +107,9 @@ class Gateway extends AbstractGateway
     }
 
     /**
- * @param string $storekey
- * @return Gateway
- */
+     * @param string $storekey
+     * @return Gateway
+     */
     public function setStoreKey(string $storekey): Gateway
     {
         return $this->setParameter('storekey', $storekey);
@@ -156,5 +157,14 @@ class Gateway extends AbstractGateway
     public function purchase3D(array $parameters = []): RequestInterface
     {
         return $this->createRequest(Purchase3DRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function completePurchase(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
     }
 }

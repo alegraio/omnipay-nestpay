@@ -15,7 +15,7 @@ class Purchase3DResponse extends AbstractResponse
         return true;
     }
 
-    public function isRedirect()
+    public function isRedirect(): bool
     {
         return true;
     }
@@ -25,7 +25,7 @@ class Purchase3DResponse extends AbstractResponse
         return $this->data['redirectUrl'];
     }
 
-    public function getRedirectMethod()
+    public function getRedirectMethod(): string
     {
         return 'POST';
     }
@@ -42,7 +42,7 @@ class Purchase3DResponse extends AbstractResponse
         return $data;
     }
 
-    private function getRedirectHtmlData()
+    private function getRedirectHtmlData(): string
     {
         $dom = new DOMDocument('1.0');
         $formData = $this->data;

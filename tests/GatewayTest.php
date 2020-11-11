@@ -4,6 +4,7 @@ namespace Omnipay\Tests;
 
 use Omnipay\NestPay\Messages\AuthorizeResponse;
 use Omnipay\NestPay\Gateway;
+use Omnipay\NestPay\Messages\CompletePurchaseResponse;
 use Omnipay\NestPay\Messages\Purchase3DResponse;
 use Omnipay\NestPay\Messages\PurchaseResponse;
 
@@ -71,8 +72,7 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase3D(): void
     {
-        $this->gateway->setClientId('400000200');
-        $this->gateway->setStoreKey('TRPS0200');
+        $this->setUp3D();
 
         $this->options = [
             'card' => $this->getCardInfo(),
@@ -94,6 +94,34 @@ class GatewayTest extends GatewayTestCase
         var_dump($response->getRedirectData());
     }
 
+    public function testCompletePurchase3D(): void
+    {
+        $this->setUp3D();
+
+        $this->options = [
+            'responseData' => [
+                'Response' => 'Approved',
+                'ProcReturnCode' => '00',
+                'mdStatus' => '1',
+                'clientid' => '400000200',
+                'oid' => '2-987654321',
+                'AuthCode' => '972997',
+                'cavv' => 'jGkoiZhEWbH0AREBQ3kcPM98klY=',
+                'eci' => '02',
+                'md' => '540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200',
+                'rnd' => 'IIZ5Vut6TgEbCjLDka9+',
+                'HASHPARAMS' => 'clientid:oid:AuthCode:ProcReturnCode:Response:mdStatus:cavv:eci:md:rnd:',
+                'HASHPARAMSVAL' => '4000002002-98765432197299700Approved1jGkoiZhEWbH0AREBQ3kcPM98klY=02540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200IIZ5Vut6TgEbCjLDka9+',
+                'HASH' => 'vVTs+SYyFsA8U+tQmGDqg3cunXY='
+            ]
+        ];
+        /** @var CompletePurchaseResponse $response */
+        $response = $this->gateway->completePurchase($this->options)->send();
+        self::assertTrue($response->isSuccessful());
+
+
+    }
+
     private function getCardInfo(): array
     {
         return [
@@ -105,5 +133,11 @@ class GatewayTest extends GatewayTestCase
             'firstname' => 'Test',
             'lastname' => 'Testtt'
         ];
+    }
+
+    private function setUp3D(): void
+    {
+        $this->gateway->setClientId('400000200');
+        $this->gateway->setStoreKey('TRPS0200');
     }
 }
