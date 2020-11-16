@@ -7,5 +7,8 @@ namespace Omnipay\NestPay\Messages;
 
 class AuthorizeResponse extends AbstractResponse
 {
-
+    public function isRedirect()
+    {
+        return false;
+    }
 }

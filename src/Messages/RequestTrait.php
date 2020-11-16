@@ -6,23 +6,26 @@ namespace Omnipay\NestPay\Messages;
 
 trait RequestTrait
 {
-    /** @var array */
-    public $endpoints = [
-        'asseco' => 'https://entegrasyon.asseco-see.com.tr/fim/api',
-        'isbank' => 'https://spos.isbank.com.tr',
-        'akbank' => 'https://www.sanalakpos.com',
-        'finansbank' => 'https://www.fbwebpos.com',
-        'denizbank' => 'https://denizbank.est.com.tr',
-        'kuveytturk' => 'https://kuveytturk.est.com.tr',
-        'halkbank' => 'https://sanalpos.halkbank.com.tr',
-        'anadolubank' => 'https://anadolusanalpos.est.com.tr',
-        'hsbc' => 'https://vpos.advantage.com.tr',
-        'ziraatbank' => 'https://sanalpos2.ziraatbank.com.tr'
-    ];
 
-    public $testEndpoints = [
-        'purchase' => 'https://testvpos.asseco-see.com.tr/fim/api',
-        '3d' => 'https://entegrasyon.asseco-see.com.tr/fim/est3Dgate'
+    public $baseUrls = [
+        'asseco' => ['baseUrl' => 'https://entegrasyon.asseco-see.com.tr'],
+        'isbank' => ['baseUrl' => 'https://spos.isbank.com.tr'],
+        'akbank' => ['baseUrl' => 'https://www.sanalakpos.com'],
+        'finansbank' => ['baseUrl' => 'https://www.fbwebpos.com'],
+        'denizbank' => ['baseUrl' => 'https://denizbank.est.com.tr'],
+        'kuveytturk' => ['baseUrl' => 'https://kuveytturk.est.com.tr'],
+        'halkbank' => ['baseUrl' => 'https://sanalpos.halkbank.com.tr'],
+        'anadolubank' => ['baseUrl' => 'https://anadolusanalpos.est.com.tr'],
+        'hsbc' => ['baseUrl' => 'https://vpos.advantage.com.tr'],
+        'ziraatbank' => ['baseUrl' => 'https://sanalpos2.ziraatbank.com.tr'],
+        'test' => [
+            'purchase' => [
+                'baseUrl' => 'https://testvpos.asseco-see.com.tr'
+            ],
+            '3d' => [
+                'baseUrl' => 'https://entegrasyon.asseco-see.com.tr'
+            ]
+        ]
     ];
 
     protected $allowedCardBrands = [
@@ -31,6 +34,10 @@ trait RequestTrait
     ];
 
     public $url = [
+        'test' => [
+            'purchase' => '/fim/api',
+            '3d' => '/fim/est3Dgate'
+        ],
         "3d" => "/servlet/est3Dgate",
         "3dhsbc" => "/servlet/hsbc3Dgate",
         "list" => "/servlet/listapproved",
@@ -42,11 +49,22 @@ trait RequestTrait
 
     public function getEndpoint(): string
     {
+        $baseUrl = $this->getBaseUrl();
+        $action = $this->getAction();
+        if ($this->getTestMode()) {
+            return $baseUrl . $this->url['test'][$action];
+        }
+
+        return $baseUrl . $this->url[$action];
+    }
+
+    public function getBaseUrl(): string
+    {
         $bank = $this->getBank();
         $action = $this->getAction();
         if ($this->getTestMode()) {
-            return $this->testEndpoints[$action] ?? $this->testEndpoints['purchase'];
+            return $this->baseUrls['test'][$action]['baseUrl'] ?? $this->baseUrls['test']['purchase']['baseUrl'];
         }
-        return $this->endpoints[$bank] . $this->url[$action];
+        return $this->baseUrls[$bank]['baseUrl'];
     }
 }

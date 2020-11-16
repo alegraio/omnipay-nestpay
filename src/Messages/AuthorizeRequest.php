@@ -5,12 +5,14 @@
 
 namespace Omnipay\NestPay\Messages;
 
+use Exception;
+
 class AuthorizeRequest extends AbstractRequest
 {
 
     /**
      * @return array
-     * @throws \Exception
+     * @throws Exception
      */
     public function getData(): array
     {

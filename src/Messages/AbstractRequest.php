@@ -5,6 +5,7 @@
 
 namespace Omnipay\NestPay\Messages;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
 
@@ -194,13 +195,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @return array
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     protected function getRequestParams(): array
     {
         $gateway = $this->getBank();
 
-        if (!array_key_exists($gateway, $this->endpoints)) {
+        if (!array_key_exists($gateway, $this->baseUrls)) {
             throw new \InvalidArgumentException('Invalid Gateway');
         }
 
