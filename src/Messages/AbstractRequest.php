@@ -120,6 +120,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 ['Content-Type' => 'application/x-www-form-urlencoded'], $this->document->saveXML());
 
             $response = (string)$httpRequest->getBody()->getContents();
+            var_dump($httpRequest->getStatusCode(), $httpRequest->getHeaders(), $response);
 
             return $this->response = $this->createResponse($response);
         } catch (\Exception $e) {

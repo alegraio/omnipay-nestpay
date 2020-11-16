@@ -6,6 +6,7 @@
 namespace Omnipay\NestPay;
 
 use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\NestPay\Messages\PreAuthorizeRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseRequest;
 use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
@@ -108,12 +109,12 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $storekey
+     * @param string $storeKey
      * @return Gateway
      */
-    public function setStoreKey(string $storekey): Gateway
+    public function setStoreKey(string $storeKey): Gateway
     {
-        return $this->setParameter('storekey', $storekey);
+        return $this->setParameter('storeKey', $storeKey);
     }
 
     /**
@@ -121,7 +122,7 @@ class Gateway extends AbstractGateway
      */
     public function getStoreKey(): string
     {
-        return $this->getParameter('storekey');
+        return $this->getParameter('storeKey');
     }
 
     /**
@@ -131,6 +132,15 @@ class Gateway extends AbstractGateway
     public function authorize(array $parameters = []): RequestInterface
     {
         return $this->createRequest(AuthorizeRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function preAuthorize(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(PreAuthorizeRequest::class, $parameters);
     }
 
     /**

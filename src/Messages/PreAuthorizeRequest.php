@@ -5,7 +5,7 @@
 
 namespace Omnipay\NestPay\Messages;
 
-class AuthorizePostRequest extends AbstractRequest
+class PreAuthorizeRequest extends AbstractRequest
 {
 
     /**
@@ -14,7 +14,6 @@ class AuthorizePostRequest extends AbstractRequest
      */
     public function getData(): array
     {
-        $this->setAction("3d");
         $data = $this->getRequestParams();
         $data['Type'] = 'PreAuth';
 

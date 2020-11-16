@@ -1,0 +1,9 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 14:10:10 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: application/json
+Content-Length: 504
+Connection: close
+
+{"pan":"5406675406675403","cv2":"000","Ecom_Payment_Card_ExpDate_Year":"22","Ecom_Payment_Card_ExpDate_Month":"12","cardType":2,"clientid":"400000200","oid":"4-987654321","amount":"30.00","currency":"949","lang":"tr","okUrl":"http:\/\/test.domain.com\/success","failUrl":"http:\/\/test.domain.com\/fail","storetype":"3d_pay","rnd":"1605538508","firmaadi":"Test Firmas\u0131","islemtipi":"Auth","taksit":"1","hash":"PM9AZH7X7z7EZ\/fKx\/n\/TZ1+rhU=","redirectUrl":"https:\/\/entegrasyon.asseco-see.com.tr"}

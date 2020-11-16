@@ -19,7 +19,7 @@ class Purchase3DRequest extends AbstractRequest
     public function getData()
     {
         $this->setAction("3d");
-        $redirectUrl = $this->getBaseUrl();
+        $redirectUrl = $this->getEndpoint();
         $this->validate('amount', 'card');
 
         $cardBrand = $this->getCard()->getBrand();

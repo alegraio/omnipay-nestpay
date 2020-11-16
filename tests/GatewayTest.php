@@ -32,7 +32,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '6-987654321',
+            'transactionId' => '7-987654321',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -40,15 +40,28 @@ class GatewayTest extends GatewayTestCase
         /** @var PurchaseResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
         self::assertTrue($response->isSuccessful());
-        var_dump($response->getData());
+    }
+
+    public function testPreAuthorize(): void
+    {
+        $this->options = [
+            'card' => $this->getCardInfo(),
+            'transactionId' => '789878987',
+            'amount' => '25.00',
+            'currency' => 'TRY'
+        ];
+
+        /** @var AuthorizeResponse $response */
+        $response = $this->gateway->preAuthorize($this->options)->send();
+        self::assertTrue($response->isSuccessful());
     }
 
     public function testAuthorize(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '435454535',
-            'amount' => '15.00',
+            'transactionId' => '789878987',
+            'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
@@ -80,13 +93,13 @@ class GatewayTest extends GatewayTestCase
             'is3d' => true,
             'storetype' => '3d_pay',
             'companyName' => 'Test Firması',
-            'transactionId' => '2-987654321',
-            'amount' => '12.00',
+            'transactionId' => '4-987654321',
+            'amount' => '30.00',
             'installment' => 1,
             'currency' => 'TRY',
-            'returnUrl' => 'http://test.domain.com/basarili',
-            'cancelUrl' => 'http://test.domain.com/basarisiz',
-            'notifyUrl' => 'http://test.domain.com/basarili',
+            'returnUrl' => 'http://test.domain.com/success',
+            'cancelUrl' => 'http://test.domain.com/fail',
+            'notifyUrl' => 'http://test.domain.com/success',
             'lang' => 'tr'
         ];
 

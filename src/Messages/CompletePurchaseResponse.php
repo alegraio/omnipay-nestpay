@@ -42,4 +42,14 @@ class CompletePurchaseResponse extends AbstractResponse
         $signature = $hashParamsVal . $storeKey;
         return base64_encode(sha1($signature, true));
     }
+
+    /**
+     * @return string|null
+     */
+    public function getCode(): ?string
+    {
+        $data = $this->getData();
+        $responseData = $data['responseData'];
+        return $this->isSuccessful() ? $responseData['AuthCode'] : parent::getCode();
+    }
 }
