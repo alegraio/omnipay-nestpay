@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Tue, 17 Nov 2020 06:38:41 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 515
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <OrderId>5-987654321</OrderId>
+  <GroupId>5-987654321</GroupId>
+  <Response>Error</Response>
+  <AuthCode></AuthCode>
+  <HostRefNum></HostRefNum>
+  <ProcReturnCode>99</ProcReturnCode>
+  <TransId>20322JmpC00101842</TransId>
+  <ErrMsg>Iade yapilamaz, siparis gunsonuna girmemis.</ErrMsg>
+  <Extra>
+    <SETTLEID></SETTLEID>
+    <TRXDATE>20201117 09:38:41</TRXDATE>
+    <ERRORCODE>CORE-2508</ERRORCODE>
+    <NUMCODE>992508</NUMCODE>
+  </Extra>
+</CC5Response>

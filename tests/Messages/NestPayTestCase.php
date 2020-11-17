@@ -21,6 +21,26 @@ class NestPayTestCase extends TestCase
     protected function getRefundParams(): array
     {
         $params = [
+            'transactionId' => '5-987654321',
+            'amount'        => '12.00'
+        ];
+
+        return $this->provideMergedParams($params);
+    }
+
+    protected function getVoidParams(): array
+    {
+        $params = [
+            'transactionId' => '6-987654321'
+        ];
+
+        return $this->provideMergedParams($params);
+    }
+
+    protected function getStatusParams(): array
+    {
+        $params = [
+            'transactionId' => '6-987654321'
         ];
 
         return $this->provideMergedParams($params);

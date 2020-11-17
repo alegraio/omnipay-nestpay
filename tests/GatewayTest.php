@@ -32,8 +32,8 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '7-987654321',
-            'amount' => '12.00',
+            'transactionId' => '989998899',
+            'amount' => '24.00',
             'currency' => 'TRY'
         ];
 
@@ -140,10 +140,8 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(): void
     {
         $this->options = [
-            'transactionId' => '5-987654321',
-            'amount'        => 12.00,
-            // 'currency'      => 'TRY',
-            'card'          => $this->getCardInfo()
+            'transactionId' => '989998899',
+            'amount'        => '24.00'
         ];
         $response = $this->gateway->refund($this->options)->send();
         var_dump($response->getData());
@@ -154,8 +152,7 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(): void
     {
         $this->options = [
-            'transactionId' => '6-987654321',
-            'card'          => $this->getCardInfo()
+            'transactionId' => '989998899'
         ];
         $response = $this->gateway->void($this->options)->send();
         var_dump($response->getData());
@@ -166,10 +163,7 @@ class GatewayTest extends GatewayTestCase
     public function testStatus(): void
     {
         $this->options = [
-            'transactionId' => '5-987654321',
-            'amount'        => 12.00,
-            'currency'      => 'TRY',
-            'card'          => $this->getCardInfo()
+            'transactionId' => '25-987654321'
         ];
         $response = $this->gateway->status($this->options)->send();
         var_dump($response->getData());

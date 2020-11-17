@@ -36,7 +36,8 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
      */
     public function getCode(): ?string
     {
-        return $this->isSuccessful() ? $this->data['AuthCode'] : parent::getCode();
+        $authCode = $this->data['AuthCode'] ?? $this->data['EXTRA']['AUTH_CODE'] ?? null;
+        return $this->isSuccessful() ? $authCode : parent::getCode();
     }
 
     /**

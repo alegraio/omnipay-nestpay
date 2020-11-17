@@ -1,0 +1,40 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Tue, 17 Nov 2020 06:50:34 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 680
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <ErrMsg>Record(s) found for 5-987654321</ErrMsg>
+  <ProcReturnCode>00</ProcReturnCode>
+  <Response>Approved</Response>
+  <OrderId>5-987654321</OrderId>
+  <TransId>20316QdoH00120068</TransId>
+  <Extra>
+    <AUTH_CODE>P11271</AUTH_CODE>
+    <AUTH_DTTM>2020-11-11 16:29:40.557</AUTH_DTTM>
+    <CAPTURE_AMT>1200</CAPTURE_AMT>
+    <CAPTURE_DTTM>2020-11-11 16:29:40.557</CAPTURE_DTTM>
+    <CAVV_3D></CAVV_3D>
+    <CHARGE_TYPE_CD>C</CHARGE_TYPE_CD>
+    <ECI_3D></ECI_3D>
+    <HOSTDATE>1111-162942</HOSTDATE>
+    <HOST_REF_NUM>031600058028</HOST_REF_NUM>
+    <MDSTATUS></MDSTATUS>
+    <NUMCODE>0</NUMCODE>
+    <ORDERSTATUS>ORD_ID:5-987654321	CHARGE_TYPE_CD:C	ORIG_TRANS_AMT:1200	CAPTURE_AMT:1200	TRANS_STAT:S	AUTH_DTTM:2020-11-11 16:29:40.557	CAPTURE_DTTM:2020-11-11 16:29:40.557	AUTH_CODE:P11271	TRANS_ID:20316QdoH00120068</ORDERSTATUS>
+    <ORD_ID>5-987654321</ORD_ID>
+    <ORIG_TRANS_AMT>1200</ORIG_TRANS_AMT>
+    <PAN>5406 67** **** 5403</PAN>
+    <PROC_RET_CD>00</PROC_RET_CD>
+    <SETTLEID>2090</SETTLEID>
+    <TRANS_ID>20316QdoH00120068</TRANS_ID>
+    <TRANS_STAT>S</TRANS_STAT>
+    <XID_3D></XID_3D>
+  </Extra>
+</CC5Response>

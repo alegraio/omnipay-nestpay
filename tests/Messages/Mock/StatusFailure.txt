@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Tue, 17 Nov 2020 06:54:46 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 417
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <ErrMsg>No record found for 25-987654321</ErrMsg>
+  <ProcReturnCode>99</ProcReturnCode>
+  <Response>Declined</Response>
+  <OrderId></OrderId>
+  <TransId></TransId>
+  <Extra>
+    <NUMCODE>0</NUMCODE>
+    <ORDERSTATUS>ORD_ID:	CHARGE_TYPE_CD:	ORIG_TRANS_AMT:	CAPTURE_AMT:	TRANS_STAT:	AUTH_DTTM:	CAPTURE_DTTM:	AUTH_CODE:</ORDERSTATUS>
+  </Extra>
+</CC5Response>
