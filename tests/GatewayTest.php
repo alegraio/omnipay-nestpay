@@ -21,10 +21,10 @@ class GatewayTest extends GatewayTestCase
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('isbank');
-        $this->gateway->setUserName('api');
-        $this->gateway->setClientId('700658785');
-        $this->gateway->setPassword('TEST1111');
+        $this->gateway->setBank('akbank');
+        $this->gateway->setUserName('101506890api');
+        $this->gateway->setClientId('100100000');
+        $this->gateway->setPassword('TEST2020');
         $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);
     }
@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '4567898765',
+            'transactionId' => '1235678906546',
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -94,8 +94,8 @@ class GatewayTest extends GatewayTestCase
             'is3d' => true,
             'storetype' => '3d',
             'companyName' => 'Test Firması',
-            'transactionId' => '2023',
-            'amount' => '19.00',
+            'transactionId' => 'order1',
+            'amount' => '10.00',
             'installment' => 1,
             'currency' => 'TRY',
             'returnUrl' => 'http://test.domain.com/payment',
@@ -115,18 +115,18 @@ class GatewayTest extends GatewayTestCase
         $this->options = [
             'responseData' => [
                 'mdStatus' => '1',
-                'clientid' => '100100000',
-                'amount' => '19.00',
+                'clientid' => '100658785',
+                'amount' => '10.00',
                 'currency' => '949',
-                'xid' => 'ZFK9bDfhtUBMvm0FBPbP//8tDoc=',
-                'oid' => '2023',
-                'cavv' => 'AAABA2VhggAAAAAhKWGCAAAAAAA=',
+                'xid' => 'zlpI9xXp1drmK694emAXVrFxi5U=',
+                'oid' => 'order1',
+                'cavv' => 'AAABAGaDQgAAAAAhKYNCAAAAAAA=',
                 'eci' => '05',
-                'md' => '402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000',
-                'rnd' => 'JIYTqRFBVBpE7qbx7TnK',
+                'md' => '402277:3E3ABE49860E79A1DCBE4660E5B46B30CD1C3376E8BFA262C97EC1380AA24904:3863:##100658785',
+                'rnd' => 'o3GDXyLh+vt2n19It5Om',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '10010000020231AAABA2VhggAAAAAhKWGCAAAAAAA=05402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000JIYTqRFBVBpE7qbx7TnK',
-                'HASH' => '3tsyTBrSUJlqp+vzdtMPXxJoxKI='
+                'HASHPARAMSVAL' => '100658785order11AAABAGaDQgAAAAAhKYNCAAAAAAA=05402277:3E3ABE49860E79A1DCBE4660E5B46B30CD1C3376E8BFA262C97EC1380AA24904:3863:##100658785o3GDXyLh+vt2n19It5Om',
+                'HASH' => 'fP6W8vv9FuGRS42GkUo+oS/kHJs='
             ]
         ];
         /** @var CompletePurchaseResponse $response */

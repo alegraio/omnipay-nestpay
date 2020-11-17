@@ -94,18 +94,18 @@ class NestPayTestCase extends TestCase
         $params = [
             'responseData' => [
                 'mdStatus' => '1',
-                'clientid' => '100100000',
-                'amount' => '30.00',
+                'clientid' => '100658785',
+                'amount' => '10.00',
                 'currency' => '949',
-                'xid' => 'rHFcAoktaev3RkCzzwX4C/320dU=',
-                'oid' => '24-987654321',
-                'cavv' => 'jKUQfB68bPMgAREBRNJEd30P3k0=',
-                'eci' => '02',
-                'md' => '540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000',
-                'rnd' => 'SVYhyeGVjzKgVeodUWnk',
+                'xid' => 'zlpI9xXp1drmK694emAXVrFxi5U=',
+                'oid' => 'order1',
+                'cavv' => 'AAABAGaDQgAAAAAhKYNCAAAAAAA=',
+                'eci' => '05',
+                'md' => '402277:3E3ABE49860E79A1DCBE4660E5B46B30CD1C3376E8BFA262C97EC1380AA24904:3863:##100658785',
+                'rnd' => 'o3GDXyLh+vt2n19It5Om',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '10010000024-9876543211jKUQfB68bPMgAREBRNJEd30P3k0=02540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000SVYhyeGVjzKgVeodUWnk',
-                'HASH' => 'iFARz7RQzdAfSBJXkVwo9RaaL5U='
+                'HASHPARAMSVAL' => '100658785order11AAABAGaDQgAAAAAhKYNCAAAAAAA=05402277:3E3ABE49860E79A1DCBE4660E5B46B30CD1C3376E8BFA262C97EC1380AA24904:3863:##100658785o3GDXyLh+vt2n19It5Om',
+                'HASH' => 'fP6W8vv9FuGRS42GkUo+oS/kHJs='
             ]
         ];
         return $this->provideMergedParams($params);
@@ -118,7 +118,7 @@ class NestPayTestCase extends TestCase
             'bank' => 'akbank',
             'username' => '101506890api',
             'clientId' => '100100000',
-            'password' => 'TEST1010',
+            'password' => 'TEST2020',
             'storeKey' => '123456'
         ];
     }

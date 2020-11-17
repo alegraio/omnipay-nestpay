@@ -39,11 +39,13 @@ class CompletePurchaseRequestTest extends NestPayTestCase
 
     public function testSendSuccess(): void
     {
+        $this->setMockHttpResponse('CompletePurchaseSuccess.txt');
         /** @var CompletePurchaseResponse $response */
         $response = $this->request->send();
 
         self::assertTrue($response->isSuccessful());
-        self::assertSame('972997', $response->getCode());
+        self::assertSame('034202', $response->getCode());
+        self::assertSame('20322RRGC14268', $response->getTransactionReference());
     }
 
     public function testSendError(): void
