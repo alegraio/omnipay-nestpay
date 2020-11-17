@@ -25,6 +25,7 @@ class GatewayTest extends GatewayTestCase
         $this->gateway->setUserName('api');
         $this->gateway->setClientId('700658785');
         $this->gateway->setPassword('TEST1111');
+        $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);
     }
 
@@ -32,14 +33,16 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '989998899',
-            'amount' => '24.00',
+            'transactionId' => '4567898765',
+            'amount' => '12.00',
             'currency' => 'TRY'
         ];
 
         /** @var PurchaseResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
+        var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());
+
     }
 
     public function testPreAuthorize(): void
@@ -86,20 +89,18 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase3D(): void
     {
-        $this->setUp3D();
-
         $this->options = [
             'card' => $this->getCardInfo(),
             'is3d' => true,
-            'storetype' => '3d_pay',
+            'storetype' => '3d',
             'companyName' => 'Test Firması',
-            'transactionId' => '4-987654321',
-            'amount' => '30.00',
+            'transactionId' => '2023',
+            'amount' => '19.00',
             'installment' => 1,
             'currency' => 'TRY',
-            'returnUrl' => 'http://test.domain.com/success',
-            'cancelUrl' => 'http://test.domain.com/fail',
-            'notifyUrl' => 'http://test.domain.com/success',
+            'returnUrl' => 'http://test.domain.com/payment',
+            'cancelUrl' => 'http://test.domain.com/payment',
+            'notifyUrl' => 'http://test.domain.com/payment',
             'lang' => 'tr'
         ];
 
@@ -111,23 +112,21 @@ class GatewayTest extends GatewayTestCase
 
     public function testCompletePurchase3D(): void
     {
-        $this->setUp3D();
-
         $this->options = [
             'responseData' => [
-                'Response' => 'Approved',
-                'ProcReturnCode' => '00',
                 'mdStatus' => '1',
-                'clientid' => '400000200',
-                'oid' => '2-987654321',
-                'AuthCode' => '972997',
-                'cavv' => 'jGkoiZhEWbH0AREBQ3kcPM98klY=',
-                'eci' => '02',
-                'md' => '540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200',
-                'rnd' => 'IIZ5Vut6TgEbCjLDka9+',
-                'HASHPARAMS' => 'clientid:oid:AuthCode:ProcReturnCode:Response:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '4000002002-98765432197299700Approved1jGkoiZhEWbH0AREBQ3kcPM98klY=02540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200IIZ5Vut6TgEbCjLDka9+',
-                'HASH' => 'vVTs+SYyFsA8U+tQmGDqg3cunXY='
+                'clientid' => '100100000',
+                'amount' => '19.00',
+                'currency' => '949',
+                'xid' => 'ZFK9bDfhtUBMvm0FBPbP//8tDoc=',
+                'oid' => '2023',
+                'cavv' => 'AAABA2VhggAAAAAhKWGCAAAAAAA=',
+                'eci' => '05',
+                'md' => '402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000',
+                'rnd' => 'JIYTqRFBVBpE7qbx7TnK',
+                'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
+                'HASHPARAMSVAL' => '10010000020231AAABA2VhggAAAAAhKWGCAAAAAAA=05402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000JIYTqRFBVBpE7qbx7TnK',
+                'HASH' => '3tsyTBrSUJlqp+vzdtMPXxJoxKI='
             ]
         ];
         /** @var CompletePurchaseResponse $response */
@@ -174,19 +173,13 @@ class GatewayTest extends GatewayTestCase
     private function getCardInfo(): array
     {
         return [
-            'number' => '5406675406675403',
+            'number' => '4022774022774026',
             'expiryMonth' => '12',
-            'expiryYear' => '2022',
+            'expiryYear' => '2030',
             'cvv' => '000',
             'email' => 'test@gmail.com',
             'firstname' => 'Test',
             'lastname' => 'Testtt'
         ];
-    }
-
-    private function setUp3D(): void
-    {
-        $this->gateway->setClientId('400000200');
-        $this->gateway->setStoreKey('TRPS0200');
     }
 }

@@ -18,12 +18,12 @@ trait ParametersTrait
 
     public function getStoreKey()
     {
-        return $this->getParameter('storekey');
+        return $this->getParameter('storeKey');
     }
 
     public function setStoreKey($value)
     {
-        return $this->setParameter('storekey', $value);
+        return $this->setParameter('storeKey', $value);
     }
 
     public function getMoneyPoints()
@@ -74,5 +74,15 @@ trait ParametersTrait
     public function setCompanyName(string $companyName)
     {
         return $this->setParameter('companyName', $companyName);
+    }
+
+    public function setCustomEndpoint(string $customEndPoint)
+    {
+        return $this->setParameter('customEndPoint', $customEndPoint);
+    }
+
+    public function getCustomEndpoint()
+    {
+        return $this->getParameter('customEndPoint');
     }
 }

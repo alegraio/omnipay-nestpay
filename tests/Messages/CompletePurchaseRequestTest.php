@@ -19,13 +19,12 @@ class CompletePurchaseRequestTest extends NestPayTestCase
     public function setUp()
     {
         $this->request = new CompletePurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
-        $this->request->setAction('3d');
         $this->request->initialize($this->getCompletePurchaseParams());
     }
 
     public function testEndpoint(): void
     {
-        self::assertSame('https://entegrasyon.asseco-see.com.tr/fim/est3Dgate', $this->request->getEndpoint());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr/fim/api', $this->request->getEndpoint());
     }
 
     /**
@@ -34,8 +33,8 @@ class CompletePurchaseRequestTest extends NestPayTestCase
     public function testData(): void
     {
         $data = $this->request->getData();
-        self::assertSame('jGkoiZhEWbH0AREBQ3kcPM98klY=', $data['responseData']['cavv']);
-        self::assertSame('vVTs+SYyFsA8U+tQmGDqg3cunXY=', $data['responseData']['HASH']);
+        self::assertSame('jKUQfB68bPMgAREBRNJEd30P3k0=', $data['responseData']['cavv']);
+        self::assertSame('iFARz7RQzdAfSBJXkVwo9RaaL5U=', $data['responseData']['HASH']);
     }
 
     public function testSendSuccess(): void
@@ -49,6 +48,9 @@ class CompletePurchaseRequestTest extends NestPayTestCase
 
     public function testSendError(): void
     {
-        // TODO
+        $this->setMockHttpResponse('CompletePurchaseFailure.txt');
+        /** @var CompletePurchaseResponse $response */
+        $response = $this->request->send();
+        self::assertFalse($response->isSuccessful());
     }
 }

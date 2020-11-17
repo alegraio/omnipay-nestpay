@@ -18,7 +18,6 @@ class Purchase3DRequest extends AbstractRequest
      */
     public function getData()
     {
-        $this->setAction("3d");
         $redirectUrl = $this->getEndpoint();
         $this->validate('amount', 'card');
 
@@ -41,7 +40,7 @@ class Purchase3DRequest extends AbstractRequest
         $data['lang'] = $this->getLang();
         $data['okUrl'] = $this->getReturnUrl();
         $data['failUrl'] = $this->getCancelUrl();
-        $data['storetype'] = '3d_pay';
+        $data['storetype'] = '3d';
         $data['rnd'] = $this->getRnd();
         $data['firmaadi'] = $this->getCompanyName();
         $data['islemtipi'] = 'Auth';
@@ -85,6 +84,13 @@ class Purchase3DRequest extends AbstractRequest
         return (string)time();
     }
 
-
+    public function getEndpoint(): string
+    {
+        $bank = $this->getBank();
+        if ($this->getTestMode()) {
+            return $this->baseUrls['test']['3d']['baseUrl'] . $this->url['test']['3d'];
+        }
+        return $this->baseUrls[$bank]['baseUrl'] . $this->url['3d'];
+    }
 
 }

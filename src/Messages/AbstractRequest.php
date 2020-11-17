@@ -8,6 +8,7 @@ namespace Omnipay\NestPay\Messages;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\NestPay\ThreeDResponse;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
@@ -223,6 +224,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['IPAddress'] = $this->getClientIp();
         $data = $this->getShipAndBill($data);
 
+        return $data;
+    }
+
+    /**
+     * @param ThreeDResponse $threeDResponse
+     * @return array
+     */
+    protected function getCompletePurchaseParams(ThreeDResponse $threeDResponse): array
+    {
+        $data['Name'] = $this->getUserName();
+        $data['Password'] = $this->getPassword();
+        $data['clientid'] = $threeDResponse->getClientId();
+        $data['oid'] = $threeDResponse->getOid();
+        $data['Type'] = 'Auth';
+        $data['Number'] = $threeDResponse->getMd();
+        $data['amount'] = $threeDResponse->getAmount();
+        $data['currency'] = $threeDResponse->getCurrency();
+        $data['PayerTxnId'] = $threeDResponse->getCavv();
+        $data['PayerSecurityLevel'] = $threeDResponse->getEci();
+        $data['PayerAuthenticationCode'] = $threeDResponse->getXid();
         return $data;
     }
 

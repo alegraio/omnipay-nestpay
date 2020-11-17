@@ -60,8 +60,6 @@ class NestPayTestCase extends TestCase
 
     protected function getPurchase3DParams(): array
     {
-        $threeDParams = $this->get3DPayCredentials();
-
         $params = [
             'card' => $this->getValidCard(),
             'is3d' => true,
@@ -76,7 +74,6 @@ class NestPayTestCase extends TestCase
             'notifyUrl' => 'http://test.domain.com/success',
             'lang' => 'tr'
         ];
-        $params = array_merge($threeDParams, $params);
         return $this->provideMergedParams($params);
     }
 
@@ -94,25 +91,23 @@ class NestPayTestCase extends TestCase
 
     protected function getCompletePurchaseParams(): array
     {
-        $threeDParams = $this->get3DPayCredentials();
         $params = [
             'responseData' => [
-                'Response' => 'Approved',
-                'ProcReturnCode' => '00',
                 'mdStatus' => '1',
-                'clientid' => '400000200',
-                'oid' => '2-987654321',
-                'AuthCode' => '972997',
-                'cavv' => 'jGkoiZhEWbH0AREBQ3kcPM98klY=',
+                'clientid' => '100100000',
+                'amount' => '30.00',
+                'currency' => '949',
+                'xid' => 'rHFcAoktaev3RkCzzwX4C/320dU=',
+                'oid' => '24-987654321',
+                'cavv' => 'jKUQfB68bPMgAREBRNJEd30P3k0=',
                 'eci' => '02',
-                'md' => '540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200',
-                'rnd' => 'IIZ5Vut6TgEbCjLDka9+',
-                'HASHPARAMS' => 'clientid:oid:AuthCode:ProcReturnCode:Response:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '4000002002-98765432197299700Approved1jGkoiZhEWbH0AREBQ3kcPM98klY=02540667:7C0AB35D13DF263AE7B84426D4555BEFC5F474469B51BABAD82A3A5E17E32E89:3970:##400000200IIZ5Vut6TgEbCjLDka9+',
-                'HASH' => 'vVTs+SYyFsA8U+tQmGDqg3cunXY='
+                'md' => '540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000',
+                'rnd' => 'SVYhyeGVjzKgVeodUWnk',
+                'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
+                'HASHPARAMSVAL' => '10010000024-9876543211jKUQfB68bPMgAREBRNJEd30P3k0=02540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000SVYhyeGVjzKgVeodUWnk',
+                'HASH' => 'iFARz7RQzdAfSBJXkVwo9RaaL5U='
             ]
         ];
-        $params = array_merge($threeDParams, $params);
         return $this->provideMergedParams($params);
     }
 
@@ -120,10 +115,11 @@ class NestPayTestCase extends TestCase
     {
         return [
             'testMode' => true,
-            'bank' => 'isbank',
-            'username' => 'api',
-            'clientId' => '700658785',
-            'password' => 'TEST1111'
+            'bank' => 'akbank',
+            'username' => '101506890api',
+            'clientId' => '100100000',
+            'password' => 'TEST1010',
+            'storeKey' => '123456'
         ];
     }
 
@@ -158,13 +154,5 @@ class NestPayTestCase extends TestCase
     {
         $params = array_merge($this->getDefaultOptions(), $params);
         return $params;
-    }
-
-    private function get3DPayCredentials(): array
-    {
-        return [
-            'clientId' => '400000200',
-            'storeKey' => 'TRPS0200'
-        ];
     }
 }
