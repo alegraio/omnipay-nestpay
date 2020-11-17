@@ -5,23 +5,27 @@
 
 namespace Omnipay\NestPay;
 
+use Omnipay\Common\Message\NotificationInterface;
+use Omnipay\NestPay\Messages\PreAuthorizeRequest;
+use Omnipay\NestPay\Messages\CompletePurchaseRequest;
+use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\CaptureRequest;
+use Omnipay\NestPay\Messages\RefundRequest;
+use Omnipay\NestPay\Messages\StatusRequest;
+use Omnipay\NestPay\Messages\VoidRequest;
 
 /**
- * @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
- * @method \Omnipay\Common\Message\RequestInterface createCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
- * @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
+ * @method NotificationInterface acceptNotification(array $options = array())
+ * @method RequestInterface completeAuthorize(array $options = array())
+ * @method RequestInterface fetchTransaction(array $options = [])
+ * @method RequestInterface createCard(array $options = array())
+ * @method RequestInterface updateCard(array $options = array())
+ * @method RequestInterface deleteCard(array $options = array())
  */
 class Gateway extends AbstractGateway
 {
@@ -105,12 +109,38 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * @param string $storeKey
+     * @return Gateway
+     */
+    public function setStoreKey(string $storeKey): Gateway
+    {
+        return $this->setParameter('storeKey', $storeKey);
+    }
+
+    /**
+     * @return Gateway
+     */
+    public function getStoreKey(): string
+    {
+        return $this->getParameter('storeKey');
+    }
+
+    /**
      * @param array $parameters
      * @return AbstractRequest|RequestInterface
      */
     public function authorize(array $parameters = []): RequestInterface
     {
         return $this->createRequest(AuthorizeRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function preAuthorize(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(PreAuthorizeRequest::class, $parameters);
     }
 
     /**
@@ -128,6 +158,55 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = []): RequestInterface
     {
+        if (isset($parameters['is3d']) && $parameters['is3d']) {
+            return $this->purchase3D($parameters);
+        }
         return $this->createRequest(PurchaseRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function purchase3D(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(Purchase3DRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function completePurchase(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(CompletePurchaseRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function refund(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(RefundRequest::class, $parameters);
+    }
+
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function void(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(VoidRequest::class, $parameters);
+    }
+
+    /**
+     * @param array $parameters
+     * @return AbstractRequest|RequestInterface
+     */
+    public function status(array $parameters = []): RequestInterface
+    {
+        return $this->createRequest(StatusRequest::class, $parameters);
     }
 }

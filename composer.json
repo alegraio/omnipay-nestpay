@@ -9,10 +9,16 @@
       "Omnipay\\NestPay\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "OmnipayTest\\NestPay\\": "tests/"
+    }
+  },
   "require": {
     "php": "^7.3",
     "omnipay/common": "^3",
-    "ext-dom": "*"
+    "ext-dom": "*",
+    "ext-simplexml": "*"
   },
   "require-dev": {
     "omnipay/tests": "^3",

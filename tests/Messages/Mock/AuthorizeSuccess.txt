@@ -1,0 +1,32 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 14:36:26 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 680
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <OrderId>789878987</OrderId>
+  <GroupId>789878987</GroupId>
+  <Response>Approved</Response>
+  <AuthCode>P42324</AuthCode>
+  <HostRefNum>032100058039</HostRefNum>
+  <ProcReturnCode>00</ProcReturnCode>
+  <TransId>20321RkaD00131468</TransId>
+  <ErrMsg></ErrMsg>
+  <Extra>
+    <SETTLEID>2096</SETTLEID>
+    <TRXDATE>20201116 17:36:26</TRXDATE>
+    <ERRORCODE></ERRORCODE>
+    <TERMINALID>00658785</TERMINALID>
+    <MERCHANTID>700658785</MERCHANTID>
+    <CARDBRAND>MASTERCARD</CARDBRAND>
+    <CARDISSUER>T. IS BANKASI A.S.</CARDISSUER>
+    <HOSTDATE>1116-173626</HOSTDATE>
+    <NUMCODE>00</NUMCODE>
+  </Extra>
+</CC5Response>

@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 10:45:52 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 504
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <OrderId></OrderId>
+  <GroupId></GroupId>
+  <Response>Error</Response>
+  <AuthCode></AuthCode>
+  <HostRefNum></HostRefNum>
+  <ProcReturnCode>99</ProcReturnCode>
+  <TransId>20321Nt2G00130013</TransId>
+  <ErrMsg>PostAuth sadece iliskili bir PreAuth icin yapilabilir.</ErrMsg>
+  <Extra>
+    <SETTLEID></SETTLEID>
+    <TRXDATE>20201116 13:45:52</TRXDATE>
+    <ERRORCODE>CORE-2115</ERRORCODE>
+    <NUMCODE>992115</NUMCODE>
+  </Extra>
+</CC5Response>

@@ -5,50 +5,21 @@
 
 namespace Omnipay\NestPay\Messages;
 
+use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\NestPay\ThreeDResponse;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
+    use RequestTrait;
+
     private $root;
 
     /** @var \DOMDocument */
     private $document;
 
-    /** @var array */
-    protected $endpoints = [
-        'test' => 'https://testvpos.asseco-see.com.tr/fim/api',
-        'asseco' => 'https://entegrasyon.asseco-see.com.tr/fim/api',
-        'isbank' => 'https://spos.isbank.com.tr',
-        'akbank' => 'https://www.sanalakpos.com',
-        'finansbank' => 'https://www.fbwebpos.com',
-        'denizbank' => 'https://denizbank.est.com.tr',
-        'kuveytturk' => 'https://kuveytturk.est.com.tr',
-        'halkbank' => 'https://sanalpos.halkbank.com.tr',
-        'anadolubank' => 'https://anadolusanalpos.est.com.tr',
-        'hsbc' => 'https://vpos.advantage.com.tr',
-        'ziraatbank' => 'https://sanalpos2.ziraatbank.com.tr'
-    ];
-
-    protected $url = [
-        "3d" => "/servlet/est3Dgate",
-        "3dhsbc" => "/servlet/hsbc3Dgate",
-        "list" => "/servlet/listapproved",
-        "detail" => "/servlet/cc5ApiServer",
-        "cancel" => "/servlet/cc5ApiServer",
-        "return" => "/servlet/cc5ApiServer",
-        "purchase" => "/servlet/cc5ApiServer"
-    ];
-
-    /**
-     * @return string
-     */
-    public function getEndpoint(): string
-    {
-        $gateway = $this->getBank();
-
-        return $this->getTestMode() == true ? $this->endpoints["test"] : $this->endpoints[$gateway] . $this->url["purchase"];
-    }
+    private $action = "purchase";
 
     /**
      * @return string
@@ -65,6 +36,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function setClientId(string $value): AbstractRequest
     {
         return $this->setParameter('clientId', $value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAction(): ?string
+    {
+        return $this->action;
+    }
+
+    /**
+     * @param string $value
+     * @return void
+     */
+    public function setAction(string $value): void
+    {
+        $this->action = $value;
     }
 
     /**
@@ -120,6 +108,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
                 $this->root->appendChild($this->document->createElement($id, $value));
             }
 
+            $extra = $this->document->createElement('Extra');
+
+            if (!empty($this->getStatus())) {
+                $extra->appendChild($this->document->createElement('ORDERSTATUS', 'QUERY'));
+                $this->root->appendChild($extra);
+            }
+
             $this->document->appendChild($this->root);
             $this->addShipAndBillToXml($shipInfo, $billInfo);
             $httpRequest = $this->httpClient->request($this->getHttpMethod(), $this->getEndpoint(),
@@ -171,6 +166,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * @return string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->getParameter('status');
+    }
+
+    /**
+     * @param string $value
+     * @return AbstractRequest
+     */
+    public function setStatus(string $value): AbstractRequest
+    {
+        return $this->setParameter('status', $value);
+    }
+
+    /**
      * Get HTTP Method.
      *
      * This is nearly always POST but can be over-ridden in sub classes.
@@ -184,13 +196,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @return array
-     * @throws \Omnipay\Common\Exception\InvalidRequestException
+     * @throws InvalidRequestException
      */
     protected function getRequestParams(): array
     {
         $gateway = $this->getBank();
 
-        if (!array_key_exists($gateway, $this->endpoints)) {
+        if (!array_key_exists($gateway, $this->baseUrls)) {
             throw new \InvalidArgumentException('Invalid Gateway');
         }
 
@@ -212,6 +224,26 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['IPAddress'] = $this->getClientIp();
         $data = $this->getShipAndBill($data);
 
+        return $data;
+    }
+
+    /**
+     * @param ThreeDResponse $threeDResponse
+     * @return array
+     */
+    protected function getCompletePurchaseParams(ThreeDResponse $threeDResponse): array
+    {
+        $data['Name'] = $this->getUserName();
+        $data['Password'] = $this->getPassword();
+        $data['clientid'] = $threeDResponse->getClientId();
+        $data['oid'] = $threeDResponse->getOid();
+        $data['Type'] = 'Auth';
+        $data['Number'] = $threeDResponse->getMd();
+        $data['amount'] = $threeDResponse->getAmount();
+        $data['currency'] = $threeDResponse->getCurrency();
+        $data['PayerTxnId'] = $threeDResponse->getCavv();
+        $data['PayerSecurityLevel'] = $threeDResponse->getEci();
+        $data['PayerAuthenticationCode'] = $threeDResponse->getXid();
         return $data;
     }
 

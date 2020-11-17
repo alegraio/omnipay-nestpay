@@ -19,7 +19,7 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
     public function __construct(RequestInterface $request, $data)
     {
         parent::__construct($request, $data);
-        $this->data = (array)simplexml_load_string($data);
+        $this->data = (is_string($data)) ? (array)simplexml_load_string($data) : $data;
     }
 
     /**
@@ -36,7 +36,8 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
      */
     public function getCode(): ?string
     {
-        return $this->isSuccessful() ? $this->data['AuthCode'] : parent::getCode();
+        $authCode = $this->data['AuthCode'] ?? $this->data['EXTRA']['AUTH_CODE'] ?? null;
+        return $this->isSuccessful() ? $authCode : parent::getCode();
     }
 
     /**

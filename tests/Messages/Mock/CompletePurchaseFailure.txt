@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 14:36:26 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 505
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <OrderId></OrderId>
+  <GroupId></GroupId>
+  <Response>Error</Response>
+  <AuthCode></AuthCode>
+  <HostRefNum></HostRefNum>
+  <ProcReturnCode>99</ProcReturnCode>
+  <TransId>20322MtsF00100005</TransId>
+  <ErrMsg>System based initialization problem. Please try again later.</ErrMsg>
+  <Extra>
+    <SETTLEID></SETTLEID>
+    <TRXDATE>20201117 12:45:44</TRXDATE>
+    <ERRORCODE>2100</ERRORCODE>
+    <NUMCODE>992104</NUMCODE>
+  </Extra>
+</CC5Response>

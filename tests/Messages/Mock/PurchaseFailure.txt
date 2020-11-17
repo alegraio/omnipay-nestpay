@@ -1,0 +1,27 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 14:05:48 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 505
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+  <OrderId></OrderId>
+  <GroupId></GroupId>
+  <Response>Error</Response>
+  <AuthCode></AuthCode>
+  <HostRefNum></HostRefNum>
+  <ProcReturnCode>99</ProcReturnCode>
+  <TransId>20321RFwC00131207</TransId>
+  <ErrMsg>Bu siparis numarasi ile zaten basarili bir siparis var.</ErrMsg>
+  <Extra>
+    <SETTLEID></SETTLEID>
+    <TRXDATE>20201116 17:05:48</TRXDATE>
+    <ERRORCODE>CORE-2507</ERRORCODE>
+    <NUMCODE>992507</NUMCODE>
+  </Extra>
+</CC5Response>
