@@ -241,9 +241,9 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['Number'] = $threeDResponse->getMd();
         $data['amount'] = $threeDResponse->getAmount();
         $data['currency'] = $threeDResponse->getCurrency();
-        $data['PayerTxnId'] = $threeDResponse->getCavv();
+        $data['PayerTxnId'] = $threeDResponse->getXid();
         $data['PayerSecurityLevel'] = $threeDResponse->getEci();
-        $data['PayerAuthenticationCode'] = $threeDResponse->getXid();
+        $data['PayerAuthenticationCode'] = $threeDResponse->getCavv();
         return $data;
     }
 
