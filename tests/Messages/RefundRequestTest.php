@@ -22,7 +22,7 @@ class RefundRequestTest extends NestPayTestCase
 
     public function testEndpoint(): void
     {
-        self::assertSame('https://testvpos.asseco-see.com.tr/fim/api', $this->request->getEndpoint());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr/fim/api', $this->request->getEndpoint());
     }
 
     /**

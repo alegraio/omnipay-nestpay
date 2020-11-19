@@ -33,8 +33,8 @@ class CompletePurchaseRequestTest extends NestPayTestCase
     public function testData(): void
     {
         $data = $this->request->getData();
-        self::assertSame('jKUQfB68bPMgAREBRNJEd30P3k0=', $data['responseData']['cavv']);
-        self::assertSame('iFARz7RQzdAfSBJXkVwo9RaaL5U=', $data['responseData']['HASH']);
+        self::assertSame('E2o+KCaG1XbaltWgSBUrtbzq/o0=', $data['PayerTxnId']);
+        self::assertSame('jKUQfB68bPMgAREBRY3EpeiTv8E=', $data['PayerAuthenticationCode']);
     }
 
     public function testSendSuccess(): void
@@ -44,8 +44,8 @@ class CompletePurchaseRequestTest extends NestPayTestCase
         $response = $this->request->send();
 
         self::assertTrue($response->isSuccessful());
-        self::assertSame('034202', $response->getCode());
-        self::assertSame('20322RRGC14268', $response->getTransactionReference());
+        self::assertSame('808739', $response->getCode());
+        self::assertSame('20324QCoD16198', $response->getTransactionReference());
     }
 
     public function testSendError(): void

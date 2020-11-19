@@ -22,7 +22,7 @@ class StatusRequestTest extends NestPayTestCase
 
     public function testEndpoint(): void
     {
-        self::assertSame('https://testvpos.asseco-see.com.tr/fim/api', $this->request->getEndpoint());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr/fim/api', $this->request->getEndpoint());
     }
 
     /**
@@ -42,7 +42,7 @@ class StatusRequestTest extends NestPayTestCase
 
         self::assertTrue($response->isSuccessful());
         self::assertSame('20316QdoH00120068', $response->getTransactionReference());
-        self::assertSame('https://testvpos.asseco-see.com.tr', $this->request->getBaseUrl());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertSame('P11271', $response->getCode());
         self::assertSame('Approved', $response->getMessage());
     }
@@ -55,7 +55,7 @@ class StatusRequestTest extends NestPayTestCase
 
         self::assertFalse($response->isSuccessful());
         self::assertNull($response->getTransactionReference());
-        self::assertSame('https://testvpos.asseco-see.com.tr', $this->request->getBaseUrl());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertNull($response->getCode());
         self::assertSame('ï¿½ptal edilmeye uygun satï¿½ï¿½ iï¿½lemi bulunamadï¿½.', $response->getMessage());
     }
