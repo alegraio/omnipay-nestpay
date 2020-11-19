@@ -29,6 +29,9 @@ use Omnipay\NestPay\Messages\VoidRequest;
  */
 class Gateway extends AbstractGateway
 {
+
+    private const PAYMENT_TYPE_3D = "3d";
+
     /**
      * Get gateway display name
      *
@@ -126,6 +129,23 @@ class Gateway extends AbstractGateway
     }
 
     /**
+     * @param string $paymentMethod
+     * @return Gateway
+     */
+    public function setPaymentMethod(string $paymentMethod): Gateway
+    {
+        return $this->setParameter('paymentMethod', $paymentMethod);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPaymentMethod(): ?string
+    {
+        return $this->getParameter('paymentMethod');
+    }
+
+    /**
      * @param array $parameters
      * @return AbstractRequest|RequestInterface
      */
@@ -158,7 +178,7 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = []): RequestInterface
     {
-        if (isset($parameters['is3d']) && $parameters['is3d']) {
+        if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
             return $this->purchase3D($parameters);
         }
         return $this->createRequest(PurchaseRequest::class, $parameters);

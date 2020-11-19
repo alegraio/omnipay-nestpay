@@ -23,9 +23,9 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway(null, $this->getHttpRequest());
         $this->gateway->setBank('halkbank');
         $this->gateway->setUserName('alegra');
-        $this->gateway->setClientId('500100000');
+        $this->gateway->setClientId('700655000100');
         $this->gateway->setPassword('ALG*3466');
-        $this->gateway->setStoreKey('123456');
+        $this->gateway->setStoreKey('TRPS0100');
         $this->gateway->setTestMode(true);
     }
 
@@ -98,12 +98,12 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase3D(): void
     {
+        $this->gateway->setPaymentMethod('3d');
         $this->options = [
             'card' => $this->getCardInfo(),
-            'is3d' => true,
             'storetype' => '3d',
             'companyName' => 'Alegra',
-            'transactionId' => '3dodemetaksit',
+            'transactionId' => 'isbank3dodeme',
             'installment' => 3,
             'amount' => '2.00',
             'currency' => 'TRY',
