@@ -47,6 +47,11 @@ class CompletePurchaseRequest extends AbstractRequest
     {
         $threeDResponse = new ThreeDResponse();
         $responseData = $this->getResponseData();
+        $ipAddress = $responseData['clientIp'] ?? null;
+        $installment = $responseData['taksit'] ?? null;
+        $userId = $responseData['userId'] ?? null;
+        $groupId = $responseData['groupId'] ?? null;
+        $transId = $responseData['TRANID'] ?? null;
         $threeDResponse->setMdStatus($responseData['mdStatus']);
         $threeDResponse->setClientId($responseData['clientid']);
         $threeDResponse->setAmount($responseData['amount']);
@@ -60,6 +65,13 @@ class CompletePurchaseRequest extends AbstractRequest
         $threeDResponse->setHashParams($responseData['HASHPARAMS']);
         $threeDResponse->setHashParamsVal($responseData['HASHPARAMSVAL']);
         $threeDResponse->setHash($responseData['HASH']);
+        if ($ipAddress !== null) {
+            $threeDResponse->setIpAddress($ipAddress);
+        }
+        $threeDResponse->setInstallment($installment);
+        $threeDResponse->setUserId($userId);
+        $threeDResponse->setGroupId($groupId);
+        $threeDResponse->setTransId($transId);
         return $threeDResponse;
     }
 

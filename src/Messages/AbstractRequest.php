@@ -235,15 +235,31 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         $data['Name'] = $this->getUserName();
         $data['Password'] = $this->getPassword();
-        $data['clientid'] = $threeDResponse->getClientId();
-        $data['oid'] = $threeDResponse->getOid();
-        $data['Type'] = 'Auth';
+        $data['ClientId'] = $threeDResponse->getClientId();
+        $data['IPAddress'] = $threeDResponse->getIpAddress();
+        $data['Mode'] = ($this->getTestMode()) ? 'T' : 'P';
         $data['Number'] = $threeDResponse->getMd();
-        $data['amount'] = $threeDResponse->getAmount();
-        $data['currency'] = $threeDResponse->getCurrency();
+        $data['OrderId'] = $threeDResponse->getOid();
+        $data['GroupId'] = $threeDResponse->getGroupId() ?? '';
+        $data['TransId'] = $threeDResponse->getTransId() ?? '';
+        $data['UserId'] = $threeDResponse->getUserId() ?? '';
+        $data['Type'] = 'Auth';
+        $data['Expires'] = '';
+        $data['Cvv2Val'] = '';
+        $data['Total'] = $threeDResponse->getAmount();
+        $data['Currency'] = $threeDResponse->getCurrency();
+        $installment = $threeDResponse->getInstallment();
+        if (empty($installment) || (int)$installment < 2) {
+            $installment = '';
+        }
+        $data['Taksit'] = $installment;
         $data['PayerTxnId'] = $threeDResponse->getXid();
         $data['PayerSecurityLevel'] = $threeDResponse->getEci();
         $data['PayerAuthenticationCode'] = $threeDResponse->getCavv();
+        $data['CardholderPresentCode'] = 13;
+        $data['bill'] = $this->getBillTo();
+        $data['ship'] = $this->getShipTo();
+        $data['Extra'] = '';
         return $data;
     }
 
@@ -304,5 +320,35 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
             $this->root->appendChild($billTo);
         }
+    }
+
+    private function getBillTo(): array
+    {
+        return [
+            'Name' => '',
+            'Street1' => '',
+            'Street2' => '',
+            'Street3' => '',
+            'City' => '',
+            'StateProv' => '',
+            'PostalCode' => '',
+            'Country' => '',
+            'Company' => '',
+            'TelVoice' => '',
+        ];
+    }
+
+    private function getShipTo(): array
+    {
+        return [
+            'Name' => '',
+            'Street1' => '',
+            'Street2' => '',
+            'Street3' => '',
+            'City' => '',
+            'StateProv' => '',
+            'PostalCode' => '',
+            'Country' => ''
+        ];
     }
 }

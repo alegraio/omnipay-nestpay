@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '19ksm-13',
+            'transactionId' => '19ksm-14',
             'installment' => 2,
             'amount' => '12.00',
             'currency' => 'TRY'
@@ -101,10 +101,9 @@ class GatewayTest extends GatewayTestCase
             'card' => $this->getCardInfo(),
             'is3d' => true,
             'storetype' => '3d',
-            'companyName' => 'Test Firması',
-            'transactionId' => 'sip-test13',
-            'amount' => '10.00',
-            'installment' => 2,
+            'companyName' => 'Alegra',
+            'transactionId' => 'osmyld-2',
+            'amount' => '1.00',
             'currency' => 'TRY',
             'returnUrl' => 'http://test.domain.com/payment',
             'cancelUrl' => 'http://test.domain.com/failure',
@@ -126,17 +125,23 @@ class GatewayTest extends GatewayTestCase
             'responseData' => [
                 'mdStatus' => '1',
                 'clientid' => '100100000',
-                'amount' => '10.00',
+                'amount' => '1.00',
+                'lang' => 'tr',
+                'Ecom_Payment_Card_ExpDate_Year' => '26',
+                'Ecom_Payment_Card_ExpDate_Month' => '12',
+                'TRANID' => '',
+                'taksit' => '',
                 'currency' => '949',
-                'xid' => 'I9I4S9Tap/uPTeVlmNa4VJ66VO4=',
-                'oid' => 'sip-test13',
-                'cavv' => 'AAABB3UHUgAAAAAhMgdSAAAAAAA=',
+                'clientIp' => '176.88.131.138',
+                'xid' => 'xaqPGtceaAlqYXXIiIf8ietS8zk=',
+                'oid' => 'osmyld-2',
+                'cavv' => 'AAABAkIYYgAAAAAhMxhiAAAAAAA=',
                 'eci' => '05',
-                'md' => '453144:B24161B70F76FDDB97B9C0612AD2A054C12C54C05559922C92618ED2DF972FA5:4307:##100100000',
-                'rnd' => '6nM7MBCnFVV0bYwZe2Rm',
+                'md' => '453144:696838E027BAFA9007FF1F9B242553BCD9D0DE6C82F3456385EDDAB63312945F:4278:##100100000',
+                'rnd' => 'PZXLB/1eEe9Y5X8b26+B',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '100100000sip-test131AAABB3UHUgAAAAAhMgdSAAAAAAA=05453144:B24161B70F76FDDB97B9C0612AD2A054C12C54C05559922C92618ED2DF972FA5:4307:##1001000006nM7MBCnFVV0bYwZe2Rm',
-                'HASH' => 'yN8FJaXMvvrTrztneS4jLoGEa6s='
+                'HASHPARAMSVAL' => '100100000osmyld-21AAABAkIYYgAAAAAhMxhiAAAAAAA=05453144:696838E027BAFA9007FF1F9B242553BCD9D0DE6C82F3456385EDDAB63312945F:4278:##100100000PZXLB/1eEe9Y5X8b26+B',
+                'HASH' => '7bymnP4Hj3g3nVabSTdw2l63LAc='
             ]
         ];
         /** @var CompletePurchaseResponse $response */
