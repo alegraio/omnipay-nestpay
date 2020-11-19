@@ -33,7 +33,8 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '19ksm-04',
+            'transactionId' => '19ksm-13',
+            'installment' => 2,
             'amount' => '12.00',
             'currency' => 'TRY'
         ];
@@ -103,7 +104,7 @@ class GatewayTest extends GatewayTestCase
             'companyName' => 'Test Firması',
             'transactionId' => 'sip-test13',
             'amount' => '10.00',
-            'installment' => 1,
+            'installment' => 2,
             'currency' => 'TRY',
             'returnUrl' => 'http://test.domain.com/payment',
             'cancelUrl' => 'http://test.domain.com/failure',

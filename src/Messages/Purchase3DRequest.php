@@ -45,8 +45,9 @@ class Purchase3DRequest extends AbstractRequest
         $data['firmaadi'] = $this->getCompanyName();
         $data['islemtipi'] = 'Auth';
 
-        $data['taksit'] = null;
-        if ($installment = $this->getInstallment()) {
+        $data['taksit'] = "";
+        $installment = $this->getInstallment();
+        if ($installment !== null && $installment > 1) {
             $data['taksit'] = $installment;
         }
 
@@ -56,6 +57,7 @@ class Purchase3DRequest extends AbstractRequest
             $data['okUrl'] .
             $data['failUrl'] .
             $data['islemtipi'] .
+            $data['taksit'].
             $this->getRnd() .
             $this->getStoreKey();
 
