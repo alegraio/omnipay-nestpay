@@ -23,6 +23,7 @@ class RefundRequest extends AbstractRequest
         $data['ClientId'] = $this->getClientId();
         $data['OrderId'] = $this->getTransactionId();
         $data['Total'] = $this->getAmount();
+        $data['Currency'] = $this->getCurrencyNumeric();
 
         return $data;
     }

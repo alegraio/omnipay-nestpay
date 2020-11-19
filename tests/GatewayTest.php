@@ -21,9 +21,9 @@ class GatewayTest extends GatewayTestCase
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('akbank');
-        $this->gateway->setUserName('akalegra');
-        $this->gateway->setClientId('100100000');
+        $this->gateway->setBank('halkbank');
+        $this->gateway->setUserName('alegra');
+        $this->gateway->setClientId('500100000');
         $this->gateway->setPassword('ALG*3466');
         $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);
@@ -33,9 +33,9 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '19ksm-14',
-            'installment' => 2,
-            'amount' => '12.00',
+            'transactionId' => 'nrmltaksit',
+            'installment' => 3,
+            'amount' => '2.00',
             'currency' => 'TRY'
         ];
 
@@ -43,6 +43,7 @@ class GatewayTest extends GatewayTestCase
         $response = $this->gateway->purchase($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -102,8 +103,9 @@ class GatewayTest extends GatewayTestCase
             'is3d' => true,
             'storetype' => '3d',
             'companyName' => 'Alegra',
-            'transactionId' => 'osmyld-2',
-            'amount' => '1.00',
+            'transactionId' => '3dodemetaksit',
+            'installment' => 3,
+            'amount' => '2.00',
             'currency' => 'TRY',
             'returnUrl' => 'http://test.domain.com/payment',
             'cancelUrl' => 'http://test.domain.com/failure',
@@ -123,31 +125,33 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'responseData' => [
-                'mdStatus' => '1',
-                'clientid' => '100100000',
-                'amount' => '1.00',
-                'lang' => 'tr',
-                'Ecom_Payment_Card_ExpDate_Year' => '26',
-                'Ecom_Payment_Card_ExpDate_Month' => '12',
                 'TRANID' => '',
-                'taksit' => '',
-                'currency' => '949',
+                'lang' => 'tr',
+                'merchantID' => '500100000',
+                'amount' => '2.00',
+                'Ecom_Payment_Card_ExpDate_Year' => '30',
                 'clientIp' => '176.88.131.138',
-                'xid' => 'xaqPGtceaAlqYXXIiIf8ietS8zk=',
-                'oid' => 'osmyld-2',
-                'cavv' => 'AAABAkIYYgAAAAAhMxhiAAAAAAA=',
+                'md' => '492024:9B42DB0B145360AC1F31BE7E040D611B3EED6430323BA5E6D9DDDBBD2CCBC453:3682:##500100000',
+                'taksit' => '3',
+                'Ecom_Payment_Card_ExpDate_Month' => '12',
+                'cavv' => 'AAABA4dEggAAAAAhM0SCAAAAAAA=',
+                'xid' => '9r2O9zvu1uE3ZEF3QEfJ9s7XzuQ=',
+                'currency' => '949',
+                'oid' => '3dodemetaksit',
+                'mdStatus' => '1',
                 'eci' => '05',
-                'md' => '453144:696838E027BAFA9007FF1F9B242553BCD9D0DE6C82F3456385EDDAB63312945F:4278:##100100000',
-                'rnd' => 'PZXLB/1eEe9Y5X8b26+B',
+                'clientid' => '500100000',
+                'HASH' => 'NglzZxZNKI8/II9eQunYwqpuwQw=',
+                'rnd' => 'NyKTZ0qrpVVsDeDptLbt',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '100100000osmyld-21AAABAkIYYgAAAAAhMxhiAAAAAAA=05453144:696838E027BAFA9007FF1F9B242553BCD9D0DE6C82F3456385EDDAB63312945F:4278:##100100000PZXLB/1eEe9Y5X8b26+B',
-                'HASH' => '7bymnP4Hj3g3nVabSTdw2l63LAc='
+                'HASHPARAMSVAL' => '5001000003dodemetaksit1AAABA4dEggAAAAAhM0SCAAAAAAA=05492024:9B42DB0B145360AC1F31BE7E040D611B3EED6430323BA5E6D9DDDBBD2CCBC453:3682:##500100000NyKTZ0qrpVVsDeDptLbt',
             ]
         ];
         /** @var CompletePurchaseResponse $response */
         $response = $this->gateway->completePurchase($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
 
@@ -156,12 +160,14 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(): void
     {
         $this->options = [
-            'transactionId' => 'sip-5557',
-            'amount'        => '15.00'
+            'transactionId' => '3dodemepesin',
+            'amount'        => '1.00',
+            'currency'      => 'TRY'
         ];
         $response = $this->gateway->refund($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -169,11 +175,12 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(): void
     {
         $this->options = [
-            'transactionId' => 'sip-5557'
+            'transactionId' => '3dodemepesin'
         ];
         $response = $this->gateway->void($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -193,9 +200,9 @@ class GatewayTest extends GatewayTestCase
     private function getCardInfo(): array
     {
         return [
-            'number' => '4531444531442283',
+            'number' => '4920244920244921',
             'expiryMonth' => '12',
-            'expiryYear' => '2026',
+            'expiryYear' => '2030',
             'cvv' => '001',
             'email' => 'test@gmail.com',
             'firstname' => 'Test',
