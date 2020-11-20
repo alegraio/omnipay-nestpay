@@ -93,7 +93,7 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     public function getSensitiveData(): array
     {
-        return [];
+        return ['Password', 'Number', 'Expires', 'Cvv2Val'];
     }
 
     /**

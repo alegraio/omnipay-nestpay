@@ -35,7 +35,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getSensitiveData(): array
     {
-        return ['Number', 'ExpireDate'];
+        return ['Number', 'Expires', 'Password'];
     }
 
     /**

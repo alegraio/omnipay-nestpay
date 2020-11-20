@@ -65,7 +65,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => 'authtest01',
+            'transactionId' => 'authtest02',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
@@ -77,14 +77,14 @@ class GatewayTest extends GatewayTestCase
         var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());*/
         self::assertInstanceOf(AuthorizeRequest::class, $request);
-        self::assertSame('authtest01', $request->getTransactionId());
+        self::assertSame('authtest02', $request->getTransactionId());
     }
 
     public function testCapture(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => 'authtest01',
+            'transactionId' => 'authtest02',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
@@ -96,7 +96,7 @@ class GatewayTest extends GatewayTestCase
         var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());*/
         self::assertInstanceOf(CaptureRequest::class, $request);
-        self::assertSame('sip-5557', $request->getTransactionId());
+        self::assertSame('authtest02', $request->getTransactionId());
     }
 
     public function testPurchase3D(): void
@@ -171,7 +171,7 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(): void
     {
         $this->options = [
-            'transactionId' => 'nrmlpesin3',
+            'transactionId' => 'authtest02',
             'amount'        => '2.00',
             'currency'      => 'TRY'
         ];
@@ -183,7 +183,7 @@ class GatewayTest extends GatewayTestCase
         var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());*/
         self::assertInstanceOf(RefundRequest::class, $request);
-        self::assertSame('nrmlpesin3', $request->getTransactionId());
+        self::assertSame('authtest02', $request->getTransactionId());
 
     }
 
