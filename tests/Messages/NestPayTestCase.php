@@ -59,6 +59,18 @@ class NestPayTestCase extends TestCase
         return $this->provideMergedParams($params);
     }
 
+    protected function getCaptureParams(): array
+    {
+        $params = [
+            'card' => $this->getValidCard(),
+            'transactionId' => '789878987',
+            'amount' => '25.00',
+            'currency' => 'TRY'
+        ];
+
+        return $this->provideMergedParams($params);
+    }
+
     protected function getPurchase3DParams(): array
     {
         $params = [
@@ -75,18 +87,6 @@ class NestPayTestCase extends TestCase
             'notifyUrl' => 'http://test.domain.com/success',
             'lang' => 'tr'
         ];
-        return $this->provideMergedParams($params);
-    }
-
-    protected function getPreAuthorizeParams(): array
-    {
-        $params = [
-            'card' => $this->getValidCard(),
-            'transactionId' => '789878987',
-            'amount' => '25.00',
-            'currency' => 'TRY'
-        ];
-
         return $this->provideMergedParams($params);
     }
 

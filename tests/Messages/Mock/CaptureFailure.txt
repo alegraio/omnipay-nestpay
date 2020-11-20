@@ -3,25 +3,25 @@ Server: NONE
 Date: Mon, 16 Nov 2020 10:45:52 GMT
 Strict-Transport-Security: max-age=31536000; includeSubDomains
 Content-Type: text/xml;charset=ISO-8859-9
-Content-Length: 537
+Content-Length: 541
 Connection: close
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 
 <?xml version="1.0" encoding="ISO-8859-9"?>
 <CC5Response>
-    <OrderId></OrderId>
-    <GroupId></GroupId>
+    <OrderId>authtest01</OrderId>
+    <GroupId>authtest01</GroupId>
     <Response>Error</Response>
     <AuthCode></AuthCode>
     <HostRefNum></HostRefNum>
     <ProcReturnCode>99</ProcReturnCode>
-    <TransId>20325OZJJ17137</TransId>
-    <ErrMsg>Bu siparis numarasi ile zaten basarili bir siparis var.</ErrMsg>
+    <TransId>20325OXqJ17006</TransId>
+    <ErrMsg>PostAuth yapilamaz, uyusan PreAuth yok.</ErrMsg>
     <Extra>
         <SETTLEID></SETTLEID>
-        <TRXDATE>20201120 14:25:09</TRXDATE>
-        <ERRORCODE>CORE-2507</ERRORCODE>
-        <NUMCODE>992507</NUMCODE>
+        <TRXDATE>20201120 14:23:42</TRXDATE>
+        <ERRORCODE>CORE-2509</ERRORCODE>
+        <NUMCODE>992509</NUMCODE>
     </Extra>
 </CC5Response>

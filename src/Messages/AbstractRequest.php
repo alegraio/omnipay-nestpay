@@ -5,23 +5,32 @@
 
 namespace Omnipay\NestPay\Messages;
 
+use DOMDocument;
+use DOMElement;
+use Exception;
+use InvalidArgumentException;
 use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
+use Omnipay\NestPay\Mask;
+use Omnipay\NestPay\RequestInterface;
 use Omnipay\NestPay\ThreeDResponse;
 
-abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
+abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest implements RequestInterface
 {
     use RequestTrait, ParametersTrait;
 
-    /** @var $root \DOMElement */
+    /** @var $root DOMElement */
     private $root;
 
-    /** @var \DOMDocument */
+    /** @var DOMDocument */
     private $document;
 
     private $action = "purchase";
+
+    /** @var array */
+    protected $requestParams;
 
     /**
      * @return string
@@ -99,11 +108,16 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     public function sendData($data)
     {
         try {
-            $shipInfo = isset($data['ship']) ? $data['ship'] : [];
-            $billInfo = isset($data['bill']) ? $data['bill'] : [];
+            $processType = $this->getProcessType();
+            if(!empty($processType))
+            {
+                $data['Type'] = $processType;
+            }
+            $shipInfo = $data['ship'] ?? [];
+            $billInfo = $data['bill'] ?? [];
             unset($data['ship'], $data['bill']);
 
-            $this->document = new \DOMDocument('1.0', 'UTF-8');
+            $this->document = new DOMDocument('1.0', 'UTF-8');
             $this->root = $this->document->createElement('CC5Request');
 
             foreach ($data as $id => $value) {
@@ -125,7 +139,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $response = (string)$httpRequest->getBody()->getContents();
 
             return $this->response = $this->createResponse($response);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw new InvalidResponseException(
                 'Error communicating with payment gateway: ' . $e->getMessage(),
                 $e->getCode()
@@ -205,7 +219,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $gateway = $this->getBank();
 
         if (!array_key_exists($gateway, $this->baseUrls)) {
-            throw new \InvalidArgumentException('Invalid Gateway');
+            throw new InvalidArgumentException('Invalid Gateway');
         }
 
         $data['Mode'] = $this->getTestMode() ? 'T' : 'P';
@@ -245,7 +259,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $data['GroupId'] = $threeDResponse->getGroupId() ?? '';
         $data['TransId'] = $threeDResponse->getTransId() ?? '';
         $data['UserId'] = $threeDResponse->getUserId() ?? '';
-        $data['Type'] = 'Auth';
+        $data['Type'] = $this->getProcessType();
         $data['Expires'] = '';
         $data['Cvv2Val'] = '';
         $data['Total'] = $threeDResponse->getAmount();
@@ -402,7 +416,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function getHash(array $data): string
     {
-        $signature = $data['clientid'] .
+        return $data['clientid'] .
             $data['oid'] .
             $data['amount'] .
             $data['okUrl'] .
@@ -410,6 +424,21 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $data['taksit'].
             $this->getRnd() .
             $this->getStoreKey();
-        return $signature;
+    }
+
+    protected function setRequestParams(array $data): void
+    {
+        array_walk_recursive($data, [$this, 'updateValue']);
+        $this->requestParams = $data;
+    }
+
+    protected function updateValue(&$data, $key): void
+    {
+        $sensitiveData = $this->getSensitiveData();
+
+        if (\in_array($key, $sensitiveData, true)) {
+            $data = Mask::mask($data);
+        }
+
     }
 }

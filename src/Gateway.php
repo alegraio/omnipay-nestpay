@@ -6,11 +6,9 @@
 namespace Omnipay\NestPay;
 
 use Omnipay\Common\Message\NotificationInterface;
-use Omnipay\NestPay\Messages\PreAuthorizeRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
-use Omnipay\Common\Message\AbstractRequest;
 use Omnipay\Common\Message\RequestInterface;
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\CaptureRequest;
@@ -126,7 +124,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function authorize(array $parameters = []): RequestInterface
     {
@@ -135,16 +133,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
-     */
-    public function preAuthorize(array $parameters = []): RequestInterface
-    {
-        return $this->createRequest(PreAuthorizeRequest::class, $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function capture(array $parameters = []): RequestInterface
     {
@@ -153,7 +142,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function purchase(array $parameters = []): RequestInterface
     {
@@ -162,7 +151,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function completePurchase(array $parameters = []): RequestInterface
     {
@@ -171,7 +160,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function refund(array $parameters = []): RequestInterface
     {
@@ -181,7 +170,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function void(array $parameters = []): RequestInterface
     {
@@ -190,7 +179,7 @@ class Gateway extends AbstractGateway
 
     /**
      * @param array $parameters
-     * @return AbstractRequest|RequestInterface
+     * @return Messages\AbstractRequest|RequestInterface
      */
     public function status(array $parameters = []): RequestInterface
     {
