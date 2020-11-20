@@ -5,6 +5,7 @@
 
 namespace Omnipay\NestPay\Messages;
 
+use Omnipay\Common\Exception\InvalidCreditCardException;
 use Omnipay\Common\Exception\InvalidRequestException;
 use Omnipay\Common\Exception\InvalidResponseException;
 use Omnipay\Common\Message\ResponseInterface;
@@ -12,8 +13,9 @@ use Omnipay\NestPay\ThreeDResponse;
 
 abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 {
-    use RequestTrait;
+    use RequestTrait, ParametersTrait;
 
+    /** @var $root \DOMElement */
     private $root;
 
     /** @var \DOMDocument */
@@ -264,6 +266,52 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * @return array
+     * @throws InvalidCreditCardException
+     * @throws InvalidRequestException
+     */
+    public function getPurchase3DData(): array
+    {
+        $redirectUrl = $this->getEndpoint();
+        $this->validate('amount', 'card');
+
+        $cardBrand = $this->getCard()->getBrand();
+        if (!array_key_exists($cardBrand, $this->allowedCardBrands)) {
+            throw new InvalidCreditCardException('Card is not valid, just only Visa or MasterCard can be usable');
+        }
+
+        $data = array();
+        $data['pan'] = $this->getCard()->getNumber();
+        $data['cv2'] = $this->getCard()->getCvv();
+        $data['Ecom_Payment_Card_ExpDate_Year'] = $this->getCard()->getExpiryDate('y');
+        $data['Ecom_Payment_Card_ExpDate_Month'] = $this->getCard()->getExpiryDate('m');
+        $data['cardType'] = $this->allowedCardBrands[$cardBrand];
+
+        $data['clientid'] = $this->getClientId();
+        $data['oid'] = $this->getTransactionId();
+        $data['amount'] = $this->getAmount();
+        $data['currency'] = $this->getCurrencyNumeric();
+        $data['lang'] = $this->getLang();
+        $data['okUrl'] = $this->getReturnUrl();
+        $data['failUrl'] = $this->getCancelUrl();
+        $data['storetype'] = '3d';
+        $data['rnd'] = $this->getRnd();
+        $data['firmaadi'] = $this->getCompanyName();
+
+        $data['taksit'] = "";
+        $installment = $this->getInstallment();
+        if ($installment !== null && $installment > 1) {
+            $data['taksit'] = $installment;
+        }
+
+        $signature = $this->getHash($data);
+
+        $data['hash'] = base64_encode(sha1($signature, true));
+        $data['redirectUrl'] = $redirectUrl;
+        return $data;
+    }
+
+    /**
      * @param array $data
      * @return array
      */
@@ -350,5 +398,18 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             'PostalCode' => '',
             'Country' => ''
         ];
+    }
+
+    public function getHash(array $data): string
+    {
+        $signature = $data['clientid'] .
+            $data['oid'] .
+            $data['amount'] .
+            $data['okUrl'] .
+            $data['failUrl'] .
+            $data['taksit'].
+            $this->getRnd() .
+            $this->getStoreKey();
+        return $signature;
     }
 }

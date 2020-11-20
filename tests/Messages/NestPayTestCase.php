@@ -63,7 +63,7 @@ class NestPayTestCase extends TestCase
     {
         $params = [
             'card' => $this->getValidCard(),
-            'paymentMethod' => true,
+            'paymentMethod' => '3d',
             'storetype' => '3d_pay',
             'companyName' => 'Test Firması',
             'transactionId' => '4-987654321',

@@ -23,9 +23,9 @@ class GatewayTest extends GatewayTestCase
         $this->gateway = new Gateway(null, $this->getHttpRequest());
         $this->gateway->setBank('halkbank');
         $this->gateway->setUserName('alegra');
-        $this->gateway->setClientId('700655000100');
+        $this->gateway->setClientId('500100000');
         $this->gateway->setPassword('ALG*3466');
-        $this->gateway->setStoreKey('TRPS0100');
+        $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);
     }
 
@@ -33,7 +33,7 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => 'nrmltaksit',
+            'transactionId' => 'nrmlpesin3',
             'installment' => 3,
             'amount' => '2.00',
             'currency' => 'TRY'
@@ -98,12 +98,12 @@ class GatewayTest extends GatewayTestCase
 
     public function testPurchase3D(): void
     {
-        $this->gateway->setPaymentMethod('3d');
         $this->options = [
             'card' => $this->getCardInfo(),
+            'paymentMethod' => '3d',
             'storetype' => '3d',
             'companyName' => 'Alegra',
-            'transactionId' => 'isbank3dodeme',
+            'transactionId' => 'testtaksit1058',
             'installment' => 3,
             'amount' => '2.00',
             'currency' => 'TRY',
@@ -131,20 +131,20 @@ class GatewayTest extends GatewayTestCase
                 'amount' => '2.00',
                 'Ecom_Payment_Card_ExpDate_Year' => '30',
                 'clientIp' => '176.88.131.138',
-                'md' => '492024:9B42DB0B145360AC1F31BE7E040D611B3EED6430323BA5E6D9DDDBBD2CCBC453:3682:##500100000',
+                'md' => '492024:F59E81638F068A2869788387E89CF72A4AC686D11FD748699486CE48CC02F805:4183:##500100000',
                 'taksit' => '3',
                 'Ecom_Payment_Card_ExpDate_Month' => '12',
-                'cavv' => 'AAABA4dEggAAAAAhM0SCAAAAAAA=',
-                'xid' => '9r2O9zvu1uE3ZEF3QEfJ9s7XzuQ=',
+                'cavv' => 'AAABAmdUcgAAAAAhNFRyAAAAAAA=',
+                'xid' => 'i4l/igsdjPHlsugxdS64yuPcenk=',
                 'currency' => '949',
-                'oid' => '3dodemetaksit',
+                'oid' => 'testtaksit1058',
                 'mdStatus' => '1',
                 'eci' => '05',
                 'clientid' => '500100000',
-                'HASH' => 'NglzZxZNKI8/II9eQunYwqpuwQw=',
-                'rnd' => 'NyKTZ0qrpVVsDeDptLbt',
+                'HASH' => 'omQ9En0BqGRLt1hskdLO76nHHuM=',
+                'rnd' => 'B1oKmHKc5cVlnP66CpWs',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '5001000003dodemetaksit1AAABA4dEggAAAAAhM0SCAAAAAAA=05492024:9B42DB0B145360AC1F31BE7E040D611B3EED6430323BA5E6D9DDDBBD2CCBC453:3682:##500100000NyKTZ0qrpVVsDeDptLbt',
+                'HASHPARAMSVAL' => '500100000testtaksit10581AAABAmdUcgAAAAAhNFRyAAAAAAA=05492024:F59E81638F068A2869788387E89CF72A4AC686D11FD748699486CE48CC02F805:4183:##500100000B1oKmHKc5cVlnP66CpWs',
             ]
         ];
         /** @var CompletePurchaseResponse $response */
@@ -160,8 +160,8 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(): void
     {
         $this->options = [
-            'transactionId' => '3dodemepesin',
-            'amount'        => '1.00',
+            'transactionId' => 'nrmlpesin3',
+            'amount'        => '2.00',
             'currency'      => 'TRY'
         ];
         $response = $this->gateway->refund($this->options)->send();
@@ -175,7 +175,7 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(): void
     {
         $this->options = [
-            'transactionId' => '3dodemepesin'
+            'transactionId' => 'testpesin'
         ];
         $response = $this->gateway->void($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());

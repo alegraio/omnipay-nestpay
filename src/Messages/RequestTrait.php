@@ -67,4 +67,9 @@ trait RequestTrait
         }
         return $this->baseUrls[$bank]['baseUrl'];
     }
+
+    public function getRnd(): string
+    {
+        return (string)time();
+    }
 }

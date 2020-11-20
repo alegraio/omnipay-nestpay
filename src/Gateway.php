@@ -8,7 +8,6 @@ namespace Omnipay\NestPay;
 use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\NestPay\Messages\PreAuthorizeRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseRequest;
-use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
@@ -29,9 +28,6 @@ use Omnipay\NestPay\Messages\VoidRequest;
  */
 class Gateway extends AbstractGateway
 {
-
-    private const PAYMENT_TYPE_3D = "3d";
-
     /**
      * Get gateway display name
      *
@@ -129,23 +125,6 @@ class Gateway extends AbstractGateway
     }
 
     /**
-     * @param string $paymentMethod
-     * @return Gateway
-     */
-    public function setPaymentMethod(string $paymentMethod): Gateway
-    {
-        return $this->setParameter('paymentMethod', $paymentMethod);
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getPaymentMethod(): ?string
-    {
-        return $this->getParameter('paymentMethod');
-    }
-
-    /**
      * @param array $parameters
      * @return AbstractRequest|RequestInterface
      */
@@ -178,19 +157,7 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = []): RequestInterface
     {
-        if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
-            return $this->purchase3D($parameters);
-        }
         return $this->createRequest(PurchaseRequest::class, $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return AbstractRequest|RequestInterface
-     */
-    public function purchase3D(array $parameters = []): RequestInterface
-    {
-        return $this->createRequest(Purchase3DRequest::class, $parameters);
     }
 
     /**

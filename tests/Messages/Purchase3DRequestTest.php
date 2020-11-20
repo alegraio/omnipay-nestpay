@@ -5,22 +5,18 @@ namespace Messages;
 
 
 use Exception;
-use Omnipay\NestPay\Messages\AuthorizeRequest;
-use Omnipay\NestPay\Messages\AuthorizeResponse;
-use Omnipay\NestPay\Messages\CompletePurchaseRequest;
-use Omnipay\NestPay\Messages\CompletePurchaseResponse;
-use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\Purchase3DResponse;
+use Omnipay\NestPay\Messages\PurchaseRequest;
 use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class Purchase3DRequestTest extends NestPayTestCase
 {
-    /** @var $request Purchase3DRequest */
+    /** @var $request PurchaseRequest */
     private $request;
 
     public function setUp()
     {
-        $this->request = new Purchase3DRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->setAction('3d');
         $this->request->initialize($this->getPurchase3DParams());
     }
@@ -36,7 +32,7 @@ class Purchase3DRequestTest extends NestPayTestCase
     public function testData(): void
     {
         $data = $this->request->getData();
-        self::assertSame('3d_pay', $data['storetype']);
+        self::assertSame('3d', $data['storetype']);
         self::assertSame('http://test.domain.com/success', $data['okUrl']);
     }
 
