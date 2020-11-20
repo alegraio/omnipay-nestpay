@@ -20,7 +20,7 @@ trait RequestTrait
         'ziraatbank' => ['baseUrl' => 'https://sanalpos2.ziraatbank.com.tr'],
         'test' => [
             'purchase' => [
-                'baseUrl' => 'https://testvpos.asseco-see.com.tr'
+                'baseUrl' => 'https://entegrasyon.asseco-see.com.tr'
             ],
             '3d' => [
                 'baseUrl' => 'https://entegrasyon.asseco-see.com.tr'
@@ -66,5 +66,10 @@ trait RequestTrait
             return $this->baseUrls['test'][$action]['baseUrl'] ?? $this->baseUrls['test']['purchase']['baseUrl'];
         }
         return $this->baseUrls[$bank]['baseUrl'];
+    }
+
+    public function getRnd(): string
+    {
+        return (string)time();
     }
 }

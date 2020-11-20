@@ -21,10 +21,10 @@ class GatewayTest extends GatewayTestCase
     {
         /** @var Gateway gateway */
         $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('isbank');
-        $this->gateway->setUserName('api');
-        $this->gateway->setClientId('700658785');
-        $this->gateway->setPassword('TEST1111');
+        $this->gateway->setBank('halkbank');
+        $this->gateway->setUserName('alegra');
+        $this->gateway->setClientId('500100000');
+        $this->gateway->setPassword('ALG*3466');
         $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);
     }
@@ -33,14 +33,17 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '4567898765',
-            'amount' => '12.00',
+            'transactionId' => 'nrmlpesin3',
+            'installment' => 3,
+            'amount' => '2.00',
             'currency' => 'TRY'
         ];
 
         /** @var PurchaseResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -49,13 +52,15 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '789878987',
+            'transactionId' => 'sip-121212',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->preAuthorize($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());
     }
 
@@ -63,13 +68,15 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '789878987',
+            'transactionId' => 'sip-121212',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->authorize($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());
     }
 
@@ -77,13 +84,15 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => '435454535',
-            'amount' => '15.00',
+            'transactionId' => 'sip-5557',
+            'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
         /** @var AuthorizeResponse $response */
         $response = $this->gateway->capture($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
         self::assertTrue($response->isSuccessful());
     }
 
@@ -91,46 +100,58 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'is3d' => true,
+            'paymentMethod' => '3d',
             'storetype' => '3d',
-            'companyName' => 'Test Firması',
-            'transactionId' => '2023',
-            'amount' => '19.00',
-            'installment' => 1,
+            'companyName' => 'Alegra',
+            'transactionId' => 'testtaksit1058',
+            'installment' => 3,
+            'amount' => '2.00',
             'currency' => 'TRY',
             'returnUrl' => 'http://test.domain.com/payment',
-            'cancelUrl' => 'http://test.domain.com/payment',
+            'cancelUrl' => 'http://test.domain.com/failure',
             'notifyUrl' => 'http://test.domain.com/payment',
             'lang' => 'tr'
         ];
 
         /** @var Purchase3DResponse $response */
         $response = $this->gateway->purchase($this->options)->send();
-        self::assertTrue($response->isSuccessful());
+        var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getRedirectData());
+        self::assertTrue($response->isSuccessful());
+
     }
 
     public function testCompletePurchase3D(): void
     {
         $this->options = [
             'responseData' => [
-                'mdStatus' => '1',
-                'clientid' => '100100000',
-                'amount' => '19.00',
+                'TRANID' => '',
+                'lang' => 'tr',
+                'merchantID' => '500100000',
+                'amount' => '2.00',
+                'Ecom_Payment_Card_ExpDate_Year' => '30',
+                'clientIp' => '176.88.131.138',
+                'md' => '492024:F59E81638F068A2869788387E89CF72A4AC686D11FD748699486CE48CC02F805:4183:##500100000',
+                'taksit' => '3',
+                'Ecom_Payment_Card_ExpDate_Month' => '12',
+                'cavv' => 'AAABAmdUcgAAAAAhNFRyAAAAAAA=',
+                'xid' => 'i4l/igsdjPHlsugxdS64yuPcenk=',
                 'currency' => '949',
-                'xid' => 'ZFK9bDfhtUBMvm0FBPbP//8tDoc=',
-                'oid' => '2023',
-                'cavv' => 'AAABA2VhggAAAAAhKWGCAAAAAAA=',
+                'oid' => 'testtaksit1058',
+                'mdStatus' => '1',
                 'eci' => '05',
-                'md' => '402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000',
-                'rnd' => 'JIYTqRFBVBpE7qbx7TnK',
+                'clientid' => '500100000',
+                'HASH' => 'omQ9En0BqGRLt1hskdLO76nHHuM=',
+                'rnd' => 'B1oKmHKc5cVlnP66CpWs',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '10010000020231AAABA2VhggAAAAAhKWGCAAAAAAA=05402277:1A0386BDEDBD1343CFA9D58F3336303EC458D476F32DE35BDE22B07D7DC079BD:4215:##100100000JIYTqRFBVBpE7qbx7TnK',
-                'HASH' => '3tsyTBrSUJlqp+vzdtMPXxJoxKI='
+                'HASHPARAMSVAL' => '500100000testtaksit10581AAABAmdUcgAAAAAhNFRyAAAAAAA=05492024:F59E81638F068A2869788387E89CF72A4AC686D11FD748699486CE48CC02F805:4183:##500100000B1oKmHKc5cVlnP66CpWs',
             ]
         ];
         /** @var CompletePurchaseResponse $response */
         $response = $this->gateway->completePurchase($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
 
@@ -139,11 +160,14 @@ class GatewayTest extends GatewayTestCase
     public function testRefund(): void
     {
         $this->options = [
-            'transactionId' => '989998899',
-            'amount'        => '24.00'
+            'transactionId' => 'nrmlpesin3',
+            'amount'        => '2.00',
+            'currency'      => 'TRY'
         ];
         $response = $this->gateway->refund($this->options)->send();
-        var_dump($response->getData());
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -151,10 +175,12 @@ class GatewayTest extends GatewayTestCase
     public function testVoid(): void
     {
         $this->options = [
-            'transactionId' => '989998899'
+            'transactionId' => 'testpesin'
         ];
         $response = $this->gateway->void($this->options)->send();
-        var_dump($response->getData());
+        var_dump($response->getRequest()->getEndPoint());
+        var_dump($response->getMessage());
+        var_dump($response->getTransactionReference());
         self::assertTrue($response->isSuccessful());
 
     }
@@ -162,9 +188,10 @@ class GatewayTest extends GatewayTestCase
     public function testStatus(): void
     {
         $this->options = [
-            'transactionId' => '25-987654321'
+            'transactionId' => 'sip-5557'
         ];
         $response = $this->gateway->status($this->options)->send();
+        var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getData());
         self::assertTrue($response->isSuccessful());
 
@@ -173,10 +200,10 @@ class GatewayTest extends GatewayTestCase
     private function getCardInfo(): array
     {
         return [
-            'number' => '4022774022774026',
+            'number' => '4920244920244921',
             'expiryMonth' => '12',
             'expiryYear' => '2030',
-            'cvv' => '000',
+            'cvv' => '001',
             'email' => 'test@gmail.com',
             'firstname' => 'Test',
             'lastname' => 'Testtt'

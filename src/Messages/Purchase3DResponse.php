@@ -61,7 +61,7 @@ class Purchase3DResponse extends AbstractResponse
         $cardType = $dom->createElement('input');
         $storeType = $dom->createElement('input');
         $hash = $dom->createElement('input');
-        $islemTipi = $dom->createElement('input');
+        $taksit = $dom->createElement('input');
         $amount = $dom->createElement('input');
         $currency = $dom->createElement('input');
         $oid = $dom->createElement('input');
@@ -90,9 +90,9 @@ class Purchase3DResponse extends AbstractResponse
         $hash->setAttribute('type', 'hidden');
         $hash->setAttribute('value', $formData['hash']);
 
-        $islemTipi->setAttribute('name', 'islemtipi');
-        $islemTipi->setAttribute('type', 'hidden');
-        $islemTipi->setAttribute('value', $formData['islemtipi']);
+        $taksit->setAttribute('name', 'taksit');
+        $taksit->setAttribute('type', 'hidden');
+        $taksit->setAttribute('value', $formData['taksit']);
 
         $amount->setAttribute('name', 'amount');
         $amount->setAttribute('type', 'hidden');
@@ -143,7 +143,7 @@ class Purchase3DResponse extends AbstractResponse
         $form->appendChild($cardType);
         $form->appendChild($storeType);
         $form->appendChild($hash);
-        $form->appendChild($islemTipi);
+        $form->appendChild($taksit);
         $form->appendChild($amount);
         $form->appendChild($currency);
         $form->appendChild($oid);

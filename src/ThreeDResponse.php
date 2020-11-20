@@ -19,6 +19,11 @@ class ThreeDResponse
     public $hashParams;
     public $hashParamsVal;
     public $hash;
+    public $groupId;
+    public $transId;
+    public $userId;
+    public $ipAddress;
+    public $installment;
 
     /**
      * @return mixed
@@ -227,6 +232,86 @@ class ThreeDResponse
     public function setHash($hash): void
     {
         $this->hash = $hash;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGroupId()
+    {
+        return $this->groupId;
+    }
+
+    /**
+     * @param mixed $groupId
+     */
+    public function setGroupId($groupId): void
+    {
+        $this->groupId = $groupId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTransId()
+    {
+        return $this->transId;
+    }
+
+    /**
+     * @param mixed $transId
+     */
+    public function setTransId($transId): void
+    {
+        $this->transId = $transId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param mixed $userId
+     */
+    public function setUserId($userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIpAddress()
+    {
+        return $this->ipAddress;
+    }
+
+    /**
+     * @param mixed $ipAddress
+     */
+    public function setIpAddress($ipAddress): void
+    {
+        $this->ipAddress = $ipAddress;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInstallment()
+    {
+        return $this->installment;
+    }
+
+    /**
+     * @param mixed $installment
+     */
+    public function setInstallment($installment): void
+    {
+        $this->installment = $installment;
     }
 
 }

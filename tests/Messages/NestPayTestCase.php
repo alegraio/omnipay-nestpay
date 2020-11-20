@@ -22,7 +22,8 @@ class NestPayTestCase extends TestCase
     {
         $params = [
             'transactionId' => '5-987654321',
-            'amount'        => '12.00'
+            'amount'        => '12.00',
+            'currency' => 'TRY'
         ];
 
         return $this->provideMergedParams($params);
@@ -62,7 +63,7 @@ class NestPayTestCase extends TestCase
     {
         $params = [
             'card' => $this->getValidCard(),
-            'is3d' => true,
+            'paymentMethod' => '3d',
             'storetype' => '3d_pay',
             'companyName' => 'Test Firması',
             'transactionId' => '4-987654321',
@@ -93,19 +94,26 @@ class NestPayTestCase extends TestCase
     {
         $params = [
             'responseData' => [
-                'mdStatus' => '1',
-                'clientid' => '100100000',
-                'amount' => '30.00',
+                'TRANID' => '',
+                'lang' => 'tr',
+                'merchantID' => '100100000',
+                'amount' => '2.00',
+                'Ecom_Payment_Card_ExpDate_Year' => '22',
+                'clientIp' => '176.88.131.138',
+                'md' => '540667:6207CFAF58C2875B561ED97E8A3C3F7CD352312D93390E110636ACF5EC869CFF:3719:##100100000',
+                'taksit' => '3',
+                'Ecom_Payment_Card_ExpDate_Month' => '12',
+                'cavv' => 'jKUQfB68bPMgAREBRY3EpeiTv8E=',
+                'xid' => 'E2o+KCaG1XbaltWgSBUrtbzq/o0=',
                 'currency' => '949',
-                'xid' => 'rHFcAoktaev3RkCzzwX4C/320dU=',
-                'oid' => '24-987654321',
-                'cavv' => 'jKUQfB68bPMgAREBRNJEd30P3k0=',
+                'oid' => '3dtaksitmock',
+                'mdStatus' => '1',
                 'eci' => '02',
-                'md' => '540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000',
-                'rnd' => 'SVYhyeGVjzKgVeodUWnk',
+                'clientid' => '100100000',
+                'HASH' => '6lzjddl4otG8RShuyQYY+grYROY=',
+                'rnd' => 'e7QViooIzT6u+4MuFIci',
                 'HASHPARAMS' => 'clientid:oid:mdStatus:cavv:eci:md:rnd:',
-                'HASHPARAMSVAL' => '10010000024-9876543211jKUQfB68bPMgAREBRNJEd30P3k0=02540667:86EE8AE6E962B9F4DCF774AFA4CE0849496A48739B1DE50372426957F688FB5A:4586:##100100000SVYhyeGVjzKgVeodUWnk',
-                'HASH' => 'iFARz7RQzdAfSBJXkVwo9RaaL5U='
+                'HASHPARAMSVAL' => '1001000003dtaksitmock1jKUQfB68bPMgAREBRY3EpeiTv8E=02540667:6207CFAF58C2875B561ED97E8A3C3F7CD352312D93390E110636ACF5EC869CFF:3719:##100100000e7QViooIzT6u+4MuFIci',
             ]
         ];
         return $this->provideMergedParams($params);
@@ -116,9 +124,9 @@ class NestPayTestCase extends TestCase
         return [
             'testMode' => true,
             'bank' => 'akbank',
-            'username' => '101506890api',
+            'username' => 'akalegra',
             'clientId' => '100100000',
-            'password' => 'TEST1010',
+            'password' => 'ALG*3466',
             'storeKey' => '123456'
         ];
     }

@@ -8,7 +8,6 @@ namespace Omnipay\NestPay;
 use Omnipay\Common\Message\NotificationInterface;
 use Omnipay\NestPay\Messages\PreAuthorizeRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseRequest;
-use Omnipay\NestPay\Messages\Purchase3DRequest;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\Common\AbstractGateway;
 use Omnipay\Common\Message\AbstractRequest;
@@ -158,19 +157,7 @@ class Gateway extends AbstractGateway
      */
     public function purchase(array $parameters = []): RequestInterface
     {
-        if (isset($parameters['is3d']) && $parameters['is3d']) {
-            return $this->purchase3D($parameters);
-        }
         return $this->createRequest(PurchaseRequest::class, $parameters);
-    }
-
-    /**
-     * @param array $parameters
-     * @return AbstractRequest|RequestInterface
-     */
-    public function purchase3D(array $parameters = []): RequestInterface
-    {
-        return $this->createRequest(Purchase3DRequest::class, $parameters);
     }
 
     /**
