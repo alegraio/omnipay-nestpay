@@ -42,9 +42,9 @@ class AuthorizeRequestTest extends NestPayTestCase
         $response = $this->request->send();
 
         self::assertTrue($response->isSuccessful());
-        self::assertSame('20321RkaD00131468', $response->getTransactionReference());
+        self::assertSame('20325OTRC16419', $response->getTransactionReference());
         self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
-        self::assertSame('P42324', $response->getCode());
+        self::assertSame('175923', $response->getCode());
         self::assertSame('Approved', $response->getMessage());
     }
 
@@ -58,6 +58,6 @@ class AuthorizeRequestTest extends NestPayTestCase
         self::assertNull($response->getTransactionReference());
         self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertNull($response->getCode());
-        self::assertSame('PostAuth sadece iliskili bir PreAuth icin yapilabilir.', $response->getMessage());
+        self::assertSame('Bu siparis numarasi ile zaten basarili bir siparis var.', $response->getMessage());
     }
 }

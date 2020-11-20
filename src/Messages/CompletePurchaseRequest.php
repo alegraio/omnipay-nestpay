@@ -11,8 +11,6 @@ use RuntimeException;
 
 class CompletePurchaseRequest extends AbstractRequest
 {
-    use ParametersTrait;
-
     /** @var ThreeDResponse */
     private $threeDResponse;
 
@@ -30,8 +28,9 @@ class CompletePurchaseRequest extends AbstractRequest
         if (!$this->checkHash()) {
             throw new RuntimeException('Hash data invalid');
         }
-
-        return $this->getCompletePurchaseParams($this->threeDResponse);
+        $data = $this->getCompletePurchaseParams($this->threeDResponse);
+        $this->setRequestParams($data);
+        return $data;
     }
 
     /**
@@ -89,13 +88,27 @@ class CompletePurchaseRequest extends AbstractRequest
         $signature = $hashParamsVal . $storeKey;
         return base64_encode(sha1($signature, true));
     }
-
-    public function getEndpoint(): string
+    /**
+     * @inheritDoc
+     */
+    public function getSensitiveData(): array
     {
-        $bank = $this->getBank();
-        if ($this->getTestMode()) {
-            return $this->baseUrls['test']['3d']['baseUrl'] . $this->url['test']['purchase'];
-        }
-        return $this->baseUrls[$bank]['baseUrl'] . $this->url['purchase'];
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessName(): string
+    {
+        return 'CompletePurchase';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessType(): string
+    {
+        return 'Auth';
     }
 }

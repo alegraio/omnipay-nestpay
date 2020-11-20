@@ -17,8 +17,7 @@ class AuthorizeRequest extends AbstractRequest
     public function getData(): array
     {
         $data = $this->getRequestParams();
-        $data['Type'] = 'PostAuth';
-
+        $this->setRequestParams($data);
         return $data;
     }
 
@@ -29,6 +28,30 @@ class AuthorizeRequest extends AbstractRequest
     protected function createResponse($data): AuthorizeResponse
     {
         return new AuthorizeResponse($this, $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function getSensitiveData(): array
+    {
+        return ['Number', 'ExpireDate'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessName(): string
+    {
+        return 'Authorize';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessType(): string
+    {
+        return 'PreAuth';
     }
 }
 

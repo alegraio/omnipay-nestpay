@@ -19,11 +19,12 @@ class PurchaseRequest extends AbstractRequest
     {
         if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
             $this->setAction('3d');
-            return $this->getPurchase3DData();
+            $data = $this->getPurchase3DData();
+            $this->setRequestParams($data);
+            return $data;
         }
         $data = $this->getRequestParams();
-        $data['Type'] = 'Auth';
-
+        $this->setRequestParams($data);
         return $data;
     }
 
@@ -42,5 +43,33 @@ class PurchaseRequest extends AbstractRequest
     protected function createResponse($data): PurchaseResponse
     {
         return new PurchaseResponse($this, $data);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getSensitiveData(): array
+    {
+        return ['Number', 'ExpireDate'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessName(): string
+    {
+        if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
+            return 'Purchase3D';
+        }
+        return 'Purchase';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessType(): string
+    {
+        return 'Auth';
     }
 }

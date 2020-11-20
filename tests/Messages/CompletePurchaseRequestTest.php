@@ -5,8 +5,6 @@ namespace Messages;
 
 
 use Exception;
-use Omnipay\NestPay\Messages\AuthorizeRequest;
-use Omnipay\NestPay\Messages\AuthorizeResponse;
 use Omnipay\NestPay\Messages\CompletePurchaseRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseResponse;
 use OmnipayTest\NestPay\Messages\NestPayTestCase;

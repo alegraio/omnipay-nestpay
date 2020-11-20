@@ -1,0 +1,44 @@
+HTTP/1.1 200 OK
+Server: NONE
+Date: Mon, 16 Nov 2020 14:36:26 GMT
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+Content-Type: text/xml;charset=ISO-8859-9
+Content-Length: 1294
+Connection: close
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+
+<?xml version="1.0" encoding="ISO-8859-9"?>
+<CC5Response>
+    <OrderId>authtest01</OrderId>
+    <GroupId>authtest01</GroupId>
+    <Response>Approved</Response>
+    <AuthCode>175923</AuthCode>
+    <HostRefNum>032514612156</HostRefNum>
+    <ProcReturnCode>00</ProcReturnCode>
+    <TransId>20325OWDB16817</TransId>
+    <ErrMsg></ErrMsg>
+    <Extra>
+        <SETTLEID>1794</SETTLEID>
+        <TRXDATE>20201120 14:22:02</TRXDATE>
+        <ERRORCODE></ERRORCODE>
+        <HOSTMSG>000 ONAY KODU XXXXXX</HOSTMSG>
+        <GARANTILIKOMISYONORANI>00010</GARANTILIKOMISYONORANI>
+        <KAMPANYAFLAG>00</KAMPANYAFLAG>
+        <ISLEMKOMISYONORANI>00010</ISLEMKOMISYONORANI>
+        <KARTISLEMTOPLAM>250</KARTISLEMTOPLAM>
+        <PCBID>0000001122</PCBID>
+        <BAYIKODU>0088034</BAYIKODU>
+        <GARANTILITUTAR>25</GARANTILITUTAR>
+        <KULLANILABILIRBAKIYE>250</KULLANILABILIRBAKIYE>
+        <CARDBRAND>VISA</CARDBRAND>
+        <GARANTIASIMTUTARI>2.5</GARANTIASIMTUTARI>
+        <BAYIADI>bayi adi</BAYIADI>
+        <AKBANKCARD>00</AKBANKCARD>
+        <ISLEMTUTARI>25</ISLEMTUTARI>
+        <GARANTISIZBORC>250</GARANTISIZBORC>
+        <NUMCODE>00</NUMCODE>
+        <PROVIZYONKODU>052816</PROVIZYONKODU>
+        <KULLANILABILIRKREDILIMITI>250</KULLANILABILIRKREDILIMITI>
+    </Extra>
+</CC5Response>

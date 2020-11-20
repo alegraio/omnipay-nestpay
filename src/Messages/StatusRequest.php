@@ -20,6 +20,7 @@ class StatusRequest extends AbstractRequest
         // $data['Currency'] = $this->getCurrencyNumeric();
         // $data['Total'] = $this->getAmount();
 
+        $this->setRequestParams($data);
         return $data;
     }
 
@@ -30,5 +31,30 @@ class StatusRequest extends AbstractRequest
     protected function createResponse($data): StatusResponse
     {
         return new StatusResponse($this, $data);
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getSensitiveData(): array
+    {
+        return ['Password'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessName(): string
+    {
+        return 'Status';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getProcessType(): string
+    {
+        return '';
     }
 }

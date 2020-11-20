@@ -2,11 +2,22 @@
 
 namespace Omnipay\Tests;
 
+use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\AuthorizeResponse;
 use Omnipay\NestPay\Gateway;
+use Omnipay\NestPay\Messages\CaptureRequest;
+use Omnipay\NestPay\Messages\CaptureResponse;
+use Omnipay\NestPay\Messages\CompletePurchaseRequest;
 use Omnipay\NestPay\Messages\CompletePurchaseResponse;
 use Omnipay\NestPay\Messages\Purchase3DResponse;
+use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\NestPay\Messages\PurchaseResponse;
+use Omnipay\NestPay\Messages\RefundRequest;
+use Omnipay\NestPay\Messages\RefundResponse;
+use Omnipay\NestPay\Messages\StatusRequest;
+use Omnipay\NestPay\Messages\StatusResponse;
+use Omnipay\NestPay\Messages\VoidRequest;
+use Omnipay\NestPay\Messages\VoidResponse;
 
 
 class GatewayTest extends GatewayTestCase
@@ -20,13 +31,13 @@ class GatewayTest extends GatewayTestCase
     public function setUp(): void
     {
         /** @var Gateway gateway */
-        $this->gateway = new Gateway(null, $this->getHttpRequest());
-        $this->gateway->setBank('halkbank');
-        $this->gateway->setUserName('alegra');
-        $this->gateway->setClientId('500100000');
+        $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
+        /*$this->gateway->setBank('akbank');
+        $this->gateway->setUserName('akalegra');
+        $this->gateway->setClientId('100100000');
         $this->gateway->setPassword('ALG*3466');
         $this->gateway->setStoreKey('123456');
-        $this->gateway->setTestMode(true);
+        $this->gateway->setTestMode(true);*/
     }
 
     public function testPurchase(): void
@@ -38,62 +49,54 @@ class GatewayTest extends GatewayTestCase
             'amount' => '2.00',
             'currency' => 'TRY'
         ];
-
+        $request = $this->gateway->purchase($this->options);
         /** @var PurchaseResponse $response */
-        $response = $this->gateway->purchase($this->options)->send();
+        /*$response = $this->gateway->purchase($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
         var_dump($response->getTransactionReference());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(PurchaseRequest::class, $request);
+        self::assertSame('nrmlpesin3', $request->getTransactionId());
 
-    }
-
-    public function testPreAuthorize(): void
-    {
-        $this->options = [
-            'card' => $this->getCardInfo(),
-            'transactionId' => 'sip-121212',
-            'amount' => '25.00',
-            'currency' => 'TRY'
-        ];
-
-        /** @var AuthorizeResponse $response */
-        $response = $this->gateway->preAuthorize($this->options)->send();
-        var_dump($response->getRequest()->getEndPoint());
-        var_dump($response->getMessage());
-        self::assertTrue($response->isSuccessful());
     }
 
     public function testAuthorize(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => 'sip-121212',
+            'transactionId' => 'authtest01',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
+        $request = $this->gateway->authorize($this->options);
         /** @var AuthorizeResponse $response */
-        $response = $this->gateway->authorize($this->options)->send();
+        /*$response = $this->gateway->authorize($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(AuthorizeRequest::class, $request);
+        self::assertSame('authtest01', $request->getTransactionId());
     }
 
     public function testCapture(): void
     {
         $this->options = [
             'card' => $this->getCardInfo(),
-            'transactionId' => 'sip-5557',
+            'transactionId' => 'authtest01',
             'amount' => '25.00',
             'currency' => 'TRY'
         ];
 
-        /** @var AuthorizeResponse $response */
-        $response = $this->gateway->capture($this->options)->send();
+        $request = $this->gateway->capture($this->options);
+        /** @var CaptureResponse $response */
+        /*$response = $this->gateway->capture($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(CaptureRequest::class, $request);
+        self::assertSame('sip-5557', $request->getTransactionId());
     }
 
     public function testPurchase3D(): void
@@ -113,11 +116,15 @@ class GatewayTest extends GatewayTestCase
             'lang' => 'tr'
         ];
 
+        $request = $this->gateway->purchase($this->options);
         /** @var Purchase3DResponse $response */
-        $response = $this->gateway->purchase($this->options)->send();
+        /*$response = $this->gateway->purchase($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getRedirectData());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(PurchaseRequest::class, $request);
+        self::assertSame('3d', $request->getPaymentMethod());
+        self::assertSame('3', $request->getInstallment());
 
     }
 
@@ -147,12 +154,16 @@ class GatewayTest extends GatewayTestCase
                 'HASHPARAMSVAL' => '500100000testtaksit10581AAABAmdUcgAAAAAhNFRyAAAAAAA=05492024:F59E81638F068A2869788387E89CF72A4AC686D11FD748699486CE48CC02F805:4183:##500100000B1oKmHKc5cVlnP66CpWs',
             ]
         ];
+
+        $request = $this->gateway->completePurchase($this->options);
         /** @var CompletePurchaseResponse $response */
-        $response = $this->gateway->completePurchase($this->options)->send();
+        /*$response = $this->gateway->completePurchase($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
         var_dump($response->getTransactionReference());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(CompletePurchaseRequest::class, $request);
+        self::assertArrayHasKey('cavv', $request->getResponseData());
 
 
     }
@@ -164,11 +175,15 @@ class GatewayTest extends GatewayTestCase
             'amount'        => '2.00',
             'currency'      => 'TRY'
         ];
-        $response = $this->gateway->refund($this->options)->send();
+        $request = $this->gateway->refund($this->options);
+        /** @var RefundResponse $response */
+        /*$response = $this->gateway->refund($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
         var_dump($response->getTransactionReference());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(RefundRequest::class, $request);
+        self::assertSame('nrmlpesin3', $request->getTransactionId());
 
     }
 
@@ -177,11 +192,16 @@ class GatewayTest extends GatewayTestCase
         $this->options = [
             'transactionId' => 'testpesin'
         ];
-        $response = $this->gateway->void($this->options)->send();
+        $request = $this->gateway->void($this->options);
+        /** @var VoidResponse $response */
+        /*$response = $this->gateway->void($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getMessage());
         var_dump($response->getTransactionReference());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(VoidRequest::class, $request);
+        self::assertSame('testpesin', $request->getTransactionId());
+
 
     }
 
@@ -190,10 +210,14 @@ class GatewayTest extends GatewayTestCase
         $this->options = [
             'transactionId' => 'sip-5557'
         ];
-        $response = $this->gateway->status($this->options)->send();
+        $request = $this->gateway->status($this->options);
+        /** @var StatusResponse $response */
+        /*$response = $this->gateway->status($this->options)->send();
         var_dump($response->getRequest()->getEndPoint());
         var_dump($response->getData());
-        self::assertTrue($response->isSuccessful());
+        self::assertTrue($response->isSuccessful());*/
+        self::assertInstanceOf(StatusRequest::class, $request);
+        self::assertSame('sip-5557', $request->getTransactionId());
 
     }
 
