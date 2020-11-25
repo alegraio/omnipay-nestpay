@@ -1,13 +1,10 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\StatusRequest;
 use Omnipay\NestPay\Messages\StatusResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class StatusRequestTest extends NestPayTestCase
 {
@@ -57,6 +54,6 @@ class StatusRequestTest extends NestPayTestCase
         self::assertNull($response->getTransactionReference());
         self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertNull($response->getCode());
-        self::assertSame('ï¿½ptal edilmeye uygun satï¿½ï¿½ iï¿½lemi bulunamadï¿½.', $response->getMessage());
+        self::assertSame('No record found for 25-987654321', $response->getMessage());
     }
 }

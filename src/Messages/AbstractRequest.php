@@ -109,8 +109,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
     {
         try {
             $processType = $this->getProcessType();
-            if(!empty($processType))
-            {
+            if (!empty($processType)) {
                 $data['Type'] = $processType;
             }
             $shipInfo = $data['ship'] ?? [];
@@ -214,7 +213,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
      * @return array
      * @throws InvalidRequestException
      */
-    protected function getRequestParams(): array
+    protected function getSalesRequestParams(): array
     {
         $gateway = $this->getBank();
 
@@ -325,6 +324,47 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
         return $data;
     }
 
+    public function getHash(array $data): string
+    {
+        return $data['clientid'] .
+            $data['oid'] .
+            $data['amount'] .
+            $data['okUrl'] .
+            $data['failUrl'] .
+            $data['taksit'] .
+            $this->getRnd() .
+            $this->getStoreKey();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRequestParams(): array
+    {
+        return [
+            'url' => $this->getEndPoint(),
+            'type' => $this->getProcessType(),
+            'data' => $this->requestParams,
+            'method' => $this->getHttpMethod()
+        ];
+    }
+
+    protected function setRequestParams(array $data): void
+    {
+        array_walk_recursive($data, [$this, 'updateValue']);
+        $this->requestParams = $data;
+    }
+
+    protected function updateValue(&$data, $key): void
+    {
+        $sensitiveData = $this->getSensitiveData();
+
+        if (\in_array($key, $sensitiveData, true)) {
+            $data = Mask::mask($data);
+        }
+
+    }
+
     /**
      * @param array $data
      * @return array
@@ -412,33 +452,5 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
             'PostalCode' => '',
             'Country' => ''
         ];
-    }
-
-    public function getHash(array $data): string
-    {
-        return $data['clientid'] .
-            $data['oid'] .
-            $data['amount'] .
-            $data['okUrl'] .
-            $data['failUrl'] .
-            $data['taksit'].
-            $this->getRnd() .
-            $this->getStoreKey();
-    }
-
-    protected function setRequestParams(array $data): void
-    {
-        array_walk_recursive($data, [$this, 'updateValue']);
-        $this->requestParams = $data;
-    }
-
-    protected function updateValue(&$data, $key): void
-    {
-        $sensitiveData = $this->getSensitiveData();
-
-        if (\in_array($key, $sensitiveData, true)) {
-            $data = Mask::mask($data);
-        }
-
     }
 }

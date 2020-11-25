@@ -22,7 +22,7 @@ class NestPayTestCase extends TestCase
     {
         $params = [
             'transactionId' => '5-987654321',
-            'amount'        => '12.00',
+            'amount' => '12.00',
             'currency' => 'TRY'
         ];
 

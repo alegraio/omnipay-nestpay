@@ -1,13 +1,10 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\CaptureRequest;
 use Omnipay\NestPay\Messages\CaptureResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class CaptureRequestTest extends NestPayTestCase
 {

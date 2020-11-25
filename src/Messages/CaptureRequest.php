@@ -15,7 +15,7 @@ class CaptureRequest extends AbstractRequest
      */
     public function getData(): array
     {
-        $data = $this->getRequestParams();
+        $data = $this->getSalesRequestParams();
         $this->setRequestParams($data);
         return $data;
     }
@@ -23,10 +23,15 @@ class CaptureRequest extends AbstractRequest
     /**
      * @param $data
      * @return CaptureResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): CaptureResponse
     {
-        return new CaptureResponse($this, $data);
+        $response = new CaptureResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
     /**

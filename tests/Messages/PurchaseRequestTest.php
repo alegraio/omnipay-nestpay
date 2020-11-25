@@ -1,21 +1,18 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\AuthorizeResponse;
 use Omnipay\NestPay\Messages\PurchaseRequest;
 use Omnipay\NestPay\Messages\PurchaseResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class PurchaseRequestTest extends NestPayTestCase
 {
     /** @var $request PurchaseRequest */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize($this->getPurchaseParams());

@@ -5,7 +5,6 @@
 
 namespace Omnipay\NestPay\Messages;
 
-
 use DOMDocument;
 
 class Purchase3DResponse extends AbstractResponse

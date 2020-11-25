@@ -36,10 +36,15 @@ class CompletePurchaseRequest extends AbstractRequest
     /**
      * @param $data
      * @return CompletePurchaseResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): CompletePurchaseResponse
     {
-        return new CompletePurchaseResponse($this, $data);
+        $response = new CompletePurchaseResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
     private function getThreeDResponse(): ThreeDResponse
@@ -88,6 +93,7 @@ class CompletePurchaseRequest extends AbstractRequest
         $signature = $hashParamsVal . $storeKey;
         return base64_encode(sha1($signature, true));
     }
+
     /**
      * @inheritDoc
      */

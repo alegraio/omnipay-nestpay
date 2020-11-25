@@ -16,7 +16,7 @@ class AuthorizeRequest extends AbstractRequest
      */
     public function getData(): array
     {
-        $data = $this->getRequestParams();
+        $data = $this->getSalesRequestParams();
         $this->setRequestParams($data);
         return $data;
     }
@@ -24,10 +24,15 @@ class AuthorizeRequest extends AbstractRequest
     /**
      * @param $data
      * @return AuthorizeResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): AuthorizeResponse
     {
-        return new AuthorizeResponse($this, $data);
+        $response = new AuthorizeResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
     /**

@@ -1,20 +1,17 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\Purchase3DResponse;
 use Omnipay\NestPay\Messages\PurchaseRequest;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class Purchase3DRequestTest extends NestPayTestCase
 {
     /** @var $request PurchaseRequest */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new PurchaseRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->setAction('3d');

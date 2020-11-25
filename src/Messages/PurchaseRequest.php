@@ -6,6 +6,8 @@
 namespace Omnipay\NestPay\Messages;
 
 use Exception;
+use Omnipay\Common\Exception\InvalidResponseException;
+use Omnipay\Common\Message\ResponseInterface;
 
 class PurchaseRequest extends AbstractRequest
 {
@@ -20,14 +22,20 @@ class PurchaseRequest extends AbstractRequest
         if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
             $this->setAction('3d');
             $data = $this->getPurchase3DData();
-            $this->setRequestParams($data);
-            return $data;
+        } else {
+            $data = $this->getSalesRequestParams();
         }
-        $data = $this->getRequestParams();
+
         $this->setRequestParams($data);
         return $data;
     }
 
+    /**
+     * @param mixed $data
+     * @return ResponseInterface|AbstractResponse|Purchase3DResponse
+     * @throws \JsonException
+     * @throws InvalidResponseException
+     */
     public function sendData($data)
     {
         if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
@@ -39,10 +47,15 @@ class PurchaseRequest extends AbstractRequest
     /**
      * @param $data
      * @return PurchaseResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): PurchaseResponse
     {
-        return new PurchaseResponse($this, $data);
+        $response = new PurchaseResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
 

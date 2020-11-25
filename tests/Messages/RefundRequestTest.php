@@ -1,20 +1,19 @@
 <?php
 
 
-namespace Messages;
+namespace OmnipayTest\NestPay\Messages;
 
 
 use Exception;
 use Omnipay\NestPay\Messages\RefundRequest;
 use Omnipay\NestPay\Messages\RefundResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class RefundRequestTest extends NestPayTestCase
 {
     /** @var $request RefundRequest */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new RefundRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize($this->getRefundParams());
@@ -43,7 +42,7 @@ class RefundRequestTest extends NestPayTestCase
 
         self::assertTrue($response->isSuccessful());
         self::assertSame('20322JqxE00101847', $response->getTransactionReference());
-        self::assertSame('https://testvpos.asseco-see.com.tr', $this->request->getBaseUrl());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertSame('P25203', $response->getCode());
         self::assertSame('Approved', $response->getMessage());
     }
@@ -56,7 +55,7 @@ class RefundRequestTest extends NestPayTestCase
 
         self::assertFalse($response->isSuccessful());
         self::assertNull($response->getTransactionReference());
-        self::assertSame('https://testvpos.asseco-see.com.tr', $this->request->getBaseUrl());
+        self::assertSame('https://entegrasyon.asseco-see.com.tr', $this->request->getBaseUrl());
         self::assertNull($response->getCode());
         self::assertSame('Iade yapilamaz, siparis gunsonuna girmemis.', $response->getMessage());
     }

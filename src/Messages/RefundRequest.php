@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Omnipay\NestPay\Messages;
-
 
 use Omnipay\Common\Exception\InvalidRequestException;
 
@@ -32,10 +30,15 @@ class RefundRequest extends AbstractRequest
     /**
      * @param $data
      * @return RefundResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): RefundResponse
     {
-        return new RefundResponse($this, $data);
+        $response = new RefundResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
     /**

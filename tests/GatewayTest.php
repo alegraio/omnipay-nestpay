@@ -1,6 +1,6 @@
 <?php
 
-namespace Omnipay\Tests;
+namespace OmnipayTest\NestPay;
 
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\AuthorizeResponse;
@@ -18,7 +18,7 @@ use Omnipay\NestPay\Messages\StatusRequest;
 use Omnipay\NestPay\Messages\StatusResponse;
 use Omnipay\NestPay\Messages\VoidRequest;
 use Omnipay\NestPay\Messages\VoidResponse;
-
+use Omnipay\Tests\GatewayTestCase;
 
 class GatewayTest extends GatewayTestCase
 {
@@ -172,8 +172,8 @@ class GatewayTest extends GatewayTestCase
     {
         $this->options = [
             'transactionId' => 'authtest02',
-            'amount'        => '2.00',
-            'currency'      => 'TRY'
+            'amount' => '2.00',
+            'currency' => 'TRY'
         ];
         $request = $this->gateway->refund($this->options);
         /** @var RefundResponse $response */

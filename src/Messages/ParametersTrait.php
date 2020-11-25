@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Omnipay\NestPay\Messages;
-
 
 trait ParametersTrait
 {

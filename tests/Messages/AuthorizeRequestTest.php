@@ -1,13 +1,10 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\AuthorizeRequest;
 use Omnipay\NestPay\Messages\AuthorizeResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class AuthorizeRequestTest extends NestPayTestCase
 {

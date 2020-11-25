@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Omnipay\NestPay\Messages;
-
 
 class StatusRequest extends AbstractRequest
 {
@@ -27,10 +25,15 @@ class StatusRequest extends AbstractRequest
     /**
      * @param $data
      * @return StatusResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): StatusResponse
     {
-        return new StatusResponse($this, $data);
+        $response = new StatusResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
 

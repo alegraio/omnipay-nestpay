@@ -1,20 +1,17 @@
 <?php
 
-
-namespace Messages;
-
+namespace OmnipayTest\NestPay\Messages;
 
 use Exception;
 use Omnipay\NestPay\Messages\VoidRequest;
 use Omnipay\NestPay\Messages\VoidResponse;
-use OmnipayTest\NestPay\Messages\NestPayTestCase;
 
 class VoidRequestTest extends NestPayTestCase
 {
     /** @var $request VoidRequest */
     private $request;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->request = new VoidRequest($this->getHttpClient(), $this->getHttpRequest());
         $this->request->initialize($this->getVoidParams());

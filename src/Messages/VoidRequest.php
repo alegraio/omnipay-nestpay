@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Omnipay\NestPay\Messages;
-
 
 class VoidRequest extends AbstractRequest
 {
@@ -27,10 +25,15 @@ class VoidRequest extends AbstractRequest
     /**
      * @param $data
      * @return VoidResponse
+     * @throws \JsonException
      */
     protected function createResponse($data): VoidResponse
     {
-        return new VoidResponse($this, $data);
+        $response = new VoidResponse($this, $data);
+        $requestParams = $this->getRequestParams();
+        $response->setServiceRequestParams($requestParams);
+
+        return $response;
     }
 
 
