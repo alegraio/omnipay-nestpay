@@ -10,7 +10,7 @@
          stopOnFailure="false"
          syntaxCheck="false">
     <testsuites>
-        <testsuite name="Omnipay Garanti(Gvp) Test Suite">
+        <testsuite name="Omnipay NestPay Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

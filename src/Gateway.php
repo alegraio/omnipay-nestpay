@@ -37,6 +37,17 @@ class Gateway extends AbstractGateway
         return 'NestPay';
     }
 
+    public function getDefaultParameters(): array
+    {
+        return [
+            'bank' => '',
+            'clientId' => '',
+            'username' => '',
+            'storeKey' => '',
+            'password' => ''
+        ];
+    }
+
     /**
      * @return string
      */

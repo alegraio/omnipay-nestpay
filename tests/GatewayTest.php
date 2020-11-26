@@ -33,9 +33,9 @@ class GatewayTest extends GatewayTestCase
         /** @var Gateway gateway */
         $this->gateway = new Gateway($this->getHttpClient(), $this->getHttpRequest());
         /*$this->gateway->setBank('akbank');
-        $this->gateway->setUserName('akalegra');
+        $this->gateway->setUserName('xxxxx');
         $this->gateway->setClientId('100100000');
-        $this->gateway->setPassword('ALG*3466');
+        $this->gateway->setPassword('xxxxxx');
         $this->gateway->setStoreKey('123456');
         $this->gateway->setTestMode(true);*/
     }

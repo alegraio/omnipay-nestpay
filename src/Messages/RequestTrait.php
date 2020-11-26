@@ -6,24 +6,16 @@ trait RequestTrait
 {
 
     public $baseUrls = [
-        'asseco' => ['baseUrl' => 'https://entegrasyon.asseco-see.com.tr'],
-        'isbank' => ['baseUrl' => 'https://spos.isbank.com.tr'],
-        'akbank' => ['baseUrl' => 'https://www.sanalakpos.com'],
-        'finansbank' => ['baseUrl' => 'https://www.fbwebpos.com'],
-        'denizbank' => ['baseUrl' => 'https://denizbank.est.com.tr'],
-        'kuveytturk' => ['baseUrl' => 'https://kuveytturk.est.com.tr'],
-        'halkbank' => ['baseUrl' => 'https://sanalpos.halkbank.com.tr'],
-        'anadolubank' => ['baseUrl' => 'https://anadolusanalpos.est.com.tr'],
-        'hsbc' => ['baseUrl' => 'https://vpos.advantage.com.tr'],
-        'ziraatbank' => ['baseUrl' => 'https://sanalpos2.ziraatbank.com.tr'],
-        'test' => [
-            'purchase' => [
-                'baseUrl' => 'https://entegrasyon.asseco-see.com.tr'
-            ],
-            '3d' => [
-                'baseUrl' => 'https://entegrasyon.asseco-see.com.tr'
-            ]
-        ]
+        'isbank' => 'https://spos.isbank.com.tr',
+        'akbank' => 'https://www.sanalakpos.com',
+        'finansbank' => 'https://www.fbwebpos.com',
+        'denizbank' => 'https://denizbank.est.com.tr',
+        'kuveytturk' => 'https://kuveytturk.est.com.tr',
+        'halkbank' => 'https://sanalpos.halkbank.com.tr',
+        'anadolubank' => 'https://anadolusanalpos.est.com.tr',
+        'hsbc' => 'https://vpos.advantage.com.tr',
+        'ziraatbank' => 'https://sanalpos2.ziraatbank.com.tr',
+        'test' => 'https://entegrasyon.asseco-see.com.tr'
     ];
 
     protected $allowedCardBrands = [
@@ -59,11 +51,10 @@ trait RequestTrait
     public function getBaseUrl(): string
     {
         $bank = $this->getBank();
-        $action = $this->getAction();
         if ($this->getTestMode()) {
-            return $this->baseUrls['test'][$action]['baseUrl'] ?? $this->baseUrls['test']['purchase']['baseUrl'];
+            return $this->baseUrls['test'];
         }
-        return $this->baseUrls[$bank]['baseUrl'];
+        return $this->baseUrls[$bank];
     }
 
     public function getRnd(): string
