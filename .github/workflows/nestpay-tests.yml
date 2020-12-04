@@ -1,4 +1,4 @@
-name: tests
+name: nestpay-tests
 
 on:
   push:
