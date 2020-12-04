@@ -310,6 +310,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
         $data['storetype'] = '3d';
         $data['rnd'] = $this->getRnd();
         $data['firmaadi'] = $this->getCompanyName();
+        $data['TransId'] = '';
 
         $data['taksit'] = "";
         $installment = $this->getInstallment();

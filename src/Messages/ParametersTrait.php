@@ -64,7 +64,7 @@ trait ParametersTrait
         return $this->setParameter('refreshtime', $value);
     }
 
-    public function getCompanyName(): string
+    public function getCompanyName(): ?string
     {
         return $this->getParameter('companyName');
     }

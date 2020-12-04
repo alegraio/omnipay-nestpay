@@ -32,7 +32,6 @@ abstract class AbstractResponse extends \Omnipay\Common\Message\AbstractResponse
      */
     public function getMessage(): ?string
     {
-
         return $this->isSuccessful() ? $this->data['Response'] : $this->data['ErrMsg'];
     }
 

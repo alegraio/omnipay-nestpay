@@ -32,26 +32,27 @@ class PurchaseRequest extends AbstractRequest
 
     /**
      * @param mixed $data
-     * @return ResponseInterface|AbstractResponse|Purchase3DResponse
-     * @throws \JsonException
+     * @return ResponseInterface
      * @throws InvalidResponseException
      */
     public function sendData($data)
     {
         if ($this->getPaymentMethod() === self::PAYMENT_TYPE_3D) {
-            return $this->response = new Purchase3DResponse($this, $data);
+            return $this->response = $this->createResponse($data, Purchase3DResponse::class);
         }
         return parent::sendData($data);
     }
 
     /**
+     * @param $responseClass
      * @param $data
-     * @return PurchaseResponse
-     * @throws \JsonException
+     * @return ResponseInterface
      */
-    protected function createResponse($data): PurchaseResponse
+    protected function createResponse($data, $responseClass = null): ResponseInterface
     {
-        $response = new PurchaseResponse($this, $data);
+        $class = $responseClass ?? PurchaseResponse::class;
+
+        $response = new $class($this, $data);
         $requestParams = $this->getRequestParams();
         $response->setServiceRequestParams($requestParams);
 
