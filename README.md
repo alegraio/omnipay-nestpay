@@ -1,6 +1,6 @@
 # omnipay-nestpay
 <p>
-<a href="https://github.com/alegraio/omnipay-payu/actions"><img src="https://github.com/alegraio/omnipay-nestpay/workflows/nestpay-tests/badge.svg" alt="Build Status"></a>
+<a href="https://github.com/alegraio/omnipay-nestpay/actions"><img src="https://github.com/alegraio/omnipay-nestpay/workflows/nestpay-tests/badge.svg" alt="Build Status"></a>
 <a href="https://packagist.org/packages/alegra/omnipay-nestpay"><img src="https://img.shields.io/packagist/dt/alegra/omnipay-nestpay" alt="Total Downloads"></a>
 <a href="https://packagist.org/packages/alegra/omnipay-nestpay"><img src="https://img.shields.io/packagist/v/alegra/omnipay-nestpay" alt="Latest Stable Version"></a>
 <a href="https://packagist.org/packages/alegra/omnipay-nestpay"><img src="https://img.shields.io/packagist/l/alegra/omnipay-nestpay" alt="License"></a>
