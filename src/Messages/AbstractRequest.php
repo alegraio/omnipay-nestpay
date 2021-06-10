@@ -374,7 +374,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
     {
         if ($this->getCard() && !empty($this->getCard()->getFirstName())) {
             $data['ship'] = [
-                'Name' => $this->getCard()->getFirstName() . ' ' . $this->getCard()->getLastName(),
+                'Name' => $this->getCard()->getShippingFirstName() . ' ' . $this->getCard()->getShippingLastName(),
                 'Street1' => $this->getCard()->getShippingAddress1(),
                 'Street2' => $this->getCard()->getShippingAddress2(),
                 'Street3' => '',
@@ -386,7 +386,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest i
                 'TelVoice' => $this->getCard()->getShippingPhone()
             ];
             $data['bill'] = [
-                'Name' => $this->getCard()->getFirstName() . ' ' . $this->getCard()->getLastName(),
+                'Name' => $this->getCard()->getBillingFirstName() . ' ' . $this->getCard()->getBillingLastName(),
                 'Street1' => $this->getCard()->getBillingAddress1(),
                 'Street2' => $this->getCard()->getBillingAddress2(),
                 'Street3' => '',
